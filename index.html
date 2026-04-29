@@ -4,73 +4,312 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crushly - IA Dating Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #1a0d0d; color: #f5d5b8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 20px; max-width: 480px; margin: 0 auto; }
-        h1 { color: #c0455a; text-align: center; font-size: 28px; margin-bottom: 5px; }
-        p.sub { text-align: center; font-size: 14px; color: #a08070; margin-bottom: 25px; }
-        textarea, select { width: 100%; padding: 15px; margin-bottom: 15px; background: #2a1515; border: 1px solid #3a2020; color: white; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
-        textarea:focus, select:focus { outline: none; border-color: #c0455a; }
-        button { width: 100%; padding: 16px; background: #c0455a; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; }
-        button:hover { background: #a03545; }
-        button:disabled { background: #555; cursor: not-allowed; }
-        .response-card { background: #2a1515; padding: 15px; border-radius: 10px; margin-bottom: 12px; border-left: 4px solid #e8845a; animation: fadeIn 0.5s ease; }
-        .response-title { font-size: 12px; color: #e8845a; text-transform: uppercase; font-weight: bold; margin-bottom: 5px; }
+        :root {
+            --bg: #050505;
+            --accent: #ff0033;
+            --text: #ffffff;
+            --secondary-bg: #121212;
+            --border: #1e1e1e;
+            --muted: #666666;
+            --neon: 0 0 10px rgba(255, 0, 51, 0.4);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        h1 {
+            color: var(--accent);
+            text-align: center;
+            font-size: 32px;
+            letter-spacing: 4px;
+            margin: 20px 0 4px;
+            text-shadow: var(--neon);
+        }
+        p.sub {
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        textarea, select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            resize: none;
+        }
+        textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: var(--neon);
+        }
+        select option { background: var(--secondary-bg); }
+        .coach-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .coach-toggle input[type="checkbox"] {
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .coach-toggle label { cursor: pointer; }
+        button#btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+        button#btn:hover { box-shadow: var(--neon); }
+        button#btn:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
+        #loading {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--accent);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .response-card {
+            background: var(--secondary-bg);
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            margin-top: 14px;
+            animation: fadeIn 0.4s ease;
+        }
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .response-title {
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 0;
+            width: auto;
+        }
+        .copy-btn:hover { background: var(--accent); color: white; box-shadow: var(--neon); }
+        .response-text { font-size: 14px; line-height: 1.6; color: var(--text); }
+        .coach-box {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: #0a0a0a;
+            border-left: 3px solid #333;
+            font-size: 12px;
+            color: #aaaaaa;
+            line-height: 1.5;
+        }
+        .coach-label {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        #email-section {
+            margin-top: 24px;
+            background: var(--secondary-bg);
+            padding: 24px;
+            border: 1px solid var(--accent);
+            text-align: center;
+        }
+        #email-section h2 { font-size: 16px; margin-bottom: 10px; letter-spacing: 1px; }
+        #email-section p { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            border-radius: 0;
+        }
+        .email-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 0;
+        }
+        .email-btn:hover { background: var(--accent); color: white; }
         .hidden { display: none; }
-        #email-section { margin-top: 20px; text-align: center; background: #2a1515; padding: 25px; border-radius: 10px; border: 1px solid #c0455a; }
-        input[type="email"] { width: 100%; padding: 12px; margin: 15px 0; box-sizing: border-box; border-radius: 8px; border: 1px solid #3a2020; background: #1a0d0d; color: white; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <h1>🔥 CRUSHLY</h1>
-    <p class="sub">Pega el mensaje y obtén la respuesta perfecta.</p>
-    <textarea id="msg" rows="4" placeholder="Ej: Hola, ¿qué buscas por aquí?"></textarea>
+    <h1>CRUSHLY</h1>
+    <p class="sub">Tu coach de citas con IA</p>
+
+    <textarea id="msg" rows="4" placeholder="Pegá el mensaje que recibiste..."></textarea>
+
     <select id="style">
         <option value="Flirty">Flirty 👄</option>
         <option value="Funny">Funny 😂</option>
         <option value="Mysterious">Mysterious 🌙</option>
         <option value="Direct">Direct 🎯</option>
+        <option value="Social">Social 🤝</option>
     </select>
-    <button id="btn" onclick="generar()">✨ Generar Respuestas</button>
-    <div id="loading" class="hidden" style="text-align:center; margin-top:20px; color: #e8845a;">Pensando la mejor respuesta...</div>
-    <div id="responses" style="margin-top: 20px;"></div>
-    <div id="email-section" class="hidden">
-        <h2>¡Te quedaste sin créditos gratis! 😢</h2>
-        <p style="font-size: 14px;">Estamos mejorando la app. Deja tu correo y te daremos acceso anticipado gratis.</p>
-        <input type="email" id="email" placeholder="tu@email.com">
-        <button onclick="guardarCorreo()" style="background:#e8845a">Quiero acceso anticipado</button>
+
+    <div class="coach-toggle">
+        <input type="checkbox" id="coachMode">
+        <label for="coachMode">⚡ Modo Coach — explicá la psicología detrás</label>
     </div>
+
+    <button id="btn" onclick="generar()">// GENERAR RESPUESTAS</button>
+
+    <div id="loading" class="hidden">[ Analizando mensaje... ]</div>
+    <div id="responses"></div>
+
+    <div id="email-section" class="hidden">
+        <h2>Sin créditos gratis 🔒</h2>
+        <p>Dejá tu correo y te damos acceso anticipado.</p>
+        <input type="email" id="email" placeholder="tu@email.com">
+        <button class="email-btn" onclick="guardarCorreo()">Quiero acceso →</button>
+    </div>
+
     <script>
         const API_URL = "https://crushly-backend-2ai3.onrender.com/api/generate";
         let usos = 0;
         const MAX_USOS = 3;
+
         async function generar() {
-            if (usos >= MAX_USOS) { document.getElementById('email-section').classList.remove('hidden'); return; }
+            if (usos >= MAX_USOS) {
+                document.getElementById('email-section').classList.remove('hidden');
+                return;
+            }
+
             const msg = document.getElementById('msg').value;
             const style = document.getElementById('style').value;
-            if (!msg.trim()) return alert("Pega un mensaje primero");
+            const coachMode = document.getElementById('coachMode').checked;
+
+            if (!msg.trim()) return alert("Pegá un mensaje primero");
+
             document.getElementById('btn').disabled = true;
             document.getElementById('loading').classList.remove('hidden');
             document.getElementById('responses').innerHTML = '';
+
             try {
-                const res = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: msg, style: style, naturalness: 8, language: "Español" }) });
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg, style, naturalness: 8, language: "Español", coachMode })
+                });
+
                 const data = await res.json();
-                if(data.success) {
-                    const opciones = data.response.split("---OPCION---").map(t => t.trim()).filter(t => t.length > 0);
+
+                if (data.success) {
                     const tipos = ["Segura ✅", "Atrevida 🔥", "Creativa 🧠"];
                     let html = '';
-                    opciones.forEach((op, i) => { html += `<div class="response-card"><div class="response-title">${tipos[i] || 'Opción'}</div><div>${op}</div></div>`; });
+
+                    data.opciones.forEach((op, i) => {
+                        const texto = op.respuesta || '';
+                        const coach = op.coach || '';
+                        html += `
+                            <div class="response-card">
+                                <div class="response-header">
+                                    <span class="response-title">${tipos[i] || 'Opción ' + (i+1)}</span>
+                                    <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'")}\`)">Copiar</button>
+                                </div>
+                                <div class="response-text">${texto}</div>
+                                ${coachMode && coach ? `
+                                <div class="coach-box">
+                                    <div class="coach-label">⚡ Por qué funciona</div>
+                                    ${coach}
+                                </div>` : ''}
+                            </div>`;
+                    });
+
                     document.getElementById('responses').innerHTML = html;
                     usos++;
-                    if (usos >= MAX_USOS) { setTimeout(() => { document.getElementById('email-section').classList.remove('hidden'); document.getElementById('btn').style.display = 'none'; }, 1000); }
-                } else { alert("Error: " + data.error); }
-            } catch (e) { alert("Error de conexión. Si es la primera vez, espera 30 segundos y prueba de nuevo."); }
-            finally { document.getElementById('btn').disabled = false; document.getElementById('loading').classList.add('hidden'); }
+
+                    if (usos >= MAX_USOS) {
+                        setTimeout(() => {
+                            document.getElementById('email-section').classList.remove('hidden');
+                            document.getElementById('btn').style.display = 'none';
+                        }, 1000);
+                    }
+                } else {
+                    alert("Error: " + data.error);
+                }
+            } catch (e) {
+                alert("Error de conexión. Si es la primera vez, esperá 30 segundos y probá de nuevo.");
+            } finally {
+                document.getElementById('btn').disabled = false;
+                document.getElementById('loading').classList.add('hidden');
+            }
         }
+
+        function copiar(btn, texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                btn.textContent = 'Copiado ✓';
+                setTimeout(() => btn.textContent = 'Copiar', 2000);
+            });
+        }
+
         function guardarCorreo() {
             const email = document.getElementById('email').value;
-            if(!email.includes("@")) return alert("Pon un correo válido");
-            document.getElementById('email-section').innerHTML = "<p style='color:#e8845a; font-weight:bold;'>¡Gracias! Te avisaremos pronto. 🔥</p>";
+            if (!email.includes("@")) return alert("Poné un correo válido");
+            document.getElementById('email-section').innerHTML =
+                "<p style='color: #ff0033; font-weight: bold; letter-spacing: 1px;'>✓ REGISTRADO. TE AVISAMOS PRONTO.</p>";
         }
     </script>
 </body>

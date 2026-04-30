@@ -24,52 +24,158 @@
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            padding: 24px 20px;
-            max-width: 420px;
-            margin: 0 auto;
             min-height: 100vh;
         }
 
-        /* HEADER */
-        .header { text-align: center; margin-bottom: 24px; }
-        .ring-container { display: flex; justify-content: center; margin-bottom: 12px; }
-        .ring { width: 72px; height: 72px; }
-        h1 { font-size: 26px; font-weight: 700; letter-spacing: 2px; }
-        p.sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+        /* ONBOARDING */
+        #onboarding {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .ob-header { text-align: center; margin-bottom: 40px; }
+        .ob-logo { font-size: 28px; font-weight: 700; letter-spacing: 2px; color: var(--text); }
+        .ob-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+        .ob-step { display: none; flex-direction: column; flex: 1; }
+        .ob-step.active { display: flex; }
+        .ob-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        .ob-desc { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
+        .ob-section-label { font-size: 11px; color: var(--label); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
 
-        /* STATS */
+        /* PROGRESS BAR */
+        .progress-bar { display: flex; gap: 6px; margin-bottom: 32px; }
+        .progress-dot { height: 4px; flex: 1; background: var(--border); border-radius: 4px; transition: background 0.3s; }
+        .progress-dot.active { background: var(--accent-blue); }
+        .progress-dot.done { background: var(--accent-green); }
+
+        /* GRID SELECTORS */
+        .country-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .country-btn {
+            padding: 14px 12px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; color: var(--text); font-family: 'Inter', sans-serif;
+            font-size: 14px; cursor: pointer; transition: all 0.2s; text-align: left;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .country-btn:hover { border-color: var(--accent-blue); }
+        .country-btn.active { border-color: var(--accent-blue); background: rgba(74,158,255,0.1); }
+        .country-flag { font-size: 22px; }
+        .country-info { display: flex; flex-direction: column; }
+        .country-name { font-size: 13px; font-weight: 600; }
+        .country-dialect { font-size: 11px; color: var(--muted); }
+
+        .gender-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .gender-btn {
+            padding: 16px 8px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
+            font-size: 13px; cursor: pointer; transition: all 0.2s; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+        }
+        .gender-btn .gender-icon { font-size: 24px; }
+        .gender-btn:hover { border-color: var(--accent-blue); color: var(--text); }
+        .gender-btn.active { border-color: var(--accent-blue); background: rgba(74,158,255,0.1); color: var(--text); }
+
+        .age-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .age-btn {
+            padding: 14px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
+            font-size: 13px; cursor: pointer; transition: all 0.2s; text-align: center;
+        }
+        .age-btn:hover { border-color: var(--accent-orange); color: var(--text); }
+        .age-btn.active { border-color: var(--accent-orange); background: rgba(255,159,10,0.1); color: var(--text); }
+
+        .intent-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+        .intent-btn {
+            padding: 14px 16px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
+            font-size: 13px; cursor: pointer; transition: all 0.2s; text-align: left;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .intent-btn:hover { border-color: var(--accent-green); color: var(--text); }
+        .intent-btn.active { border-color: var(--accent-green); background: rgba(48,209,88,0.1); color: var(--text); }
+        .intent-icon { font-size: 20px; }
+
+        .app-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .app-btn {
+            padding: 12px 8px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
+            font-size: 12px; cursor: pointer; transition: all 0.2s; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+        }
+        .app-btn .app-icon { font-size: 22px; }
+        .app-btn:hover { border-color: var(--accent-blue); color: var(--text); }
+        .app-btn.active { border-color: var(--accent-blue); background: rgba(74,158,255,0.1); color: var(--text); }
+
+        /* WELCOME SCREEN */
+        .welcome-screen {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; flex: 1; text-align: center;
+        }
+        .welcome-ring { margin-bottom: 24px; }
+        .welcome-title { font-size: 26px; font-weight: 700; margin-bottom: 12px; }
+        .welcome-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 32px; max-width: 300px; }
+        .welcome-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
+        .welcome-tag {
+            padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+        }
+        .tag-blue { background: rgba(74,158,255,0.15); color: var(--accent-blue); border: 1px solid rgba(74,158,255,0.3); }
+        .tag-green { background: rgba(48,209,88,0.15); color: var(--accent-green); border: 1px solid rgba(48,209,88,0.3); }
+        .tag-orange { background: rgba(255,159,10,0.15); color: var(--accent-orange); border: 1px solid rgba(255,159,10,0.3); }
+
+        /* BUTTONS */
+        .ob-btn {
+            width: 100%; padding: 16px; background: var(--accent-blue); color: white;
+            border: none; border-radius: 14px; font-family: 'Inter', sans-serif;
+            font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s;
+            margin-top: auto;
+        }
+        .ob-btn:hover { background: #3a8ef0; transform: translateY(-1px); }
+        .ob-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+        .ob-btn-green { background: var(--accent-green); }
+        .ob-btn-green:hover { background: #28c050; }
+
+        /* MAIN APP */
+        #app {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            min-height: 100vh;
+            display: none;
+        }
+
+        .header { text-align: center; margin-bottom: 20px; }
+        .ring-container { display: flex; justify-content: center; margin-bottom: 10px; }
+        .ring { width: 64px; height: 64px; }
+        h1 { font-size: 24px; font-weight: 700; letter-spacing: 2px; }
+        p.sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
         .stats-row { display: flex; gap: 10px; margin-bottom: 20px; }
-        .stat-card { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 10px; text-align: center; }
-        .stat-value { font-size: 20px; font-weight: 700; }
-        .stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 10px; text-align: center; }
+        .stat-value { font-size: 18px; font-weight: 700; }
+        .stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; text-transform: uppercase; }
         .green { color: var(--accent-green); }
         .orange { color: var(--accent-orange); }
         .blue { color: var(--accent-blue); }
 
-        /* SECTION LABEL */
         .section-label { font-size: 11px; color: var(--label); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600; }
 
-        /* GENDER SELECTOR */
-        .gender-row { display: flex; gap: 8px; margin-bottom: 16px; }
-        .gender-btn {
-            flex: 1; padding: 12px 8px; background: var(--card); border: 1px solid var(--border);
-            border-radius: 12px; color: var(--muted); font-family: 'Inter', sans-serif;
-            font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-align: center;
+        /* DIALECT SELECTOR EN APP */
+        .dialect-bar {
+            display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto;
+            padding-bottom: 4px; scrollbar-width: none;
         }
-        .gender-btn:hover { border-color: var(--accent-blue); color: var(--text); }
-        .gender-btn.active { border-color: var(--accent-blue); color: var(--text); background: rgba(74,158,255,0.1); }
-
-        /* LANGUAGE SELECTOR */
-        .lang-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-        .lang-btn {
-            flex: 1; min-width: 80px; padding: 10px 8px; background: var(--card); border: 1px solid var(--border);
-            border-radius: 12px; color: var(--muted); font-family: 'Inter', sans-serif;
-            font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-align: center;
+        .dialect-bar::-webkit-scrollbar { display: none; }
+        .dialect-chip {
+            flex-shrink: 0; padding: 6px 12px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 20px;
+            font-size: 12px; color: var(--muted); cursor: pointer; transition: all 0.2s;
+            white-space: nowrap;
         }
-        .lang-btn:hover { border-color: var(--accent-green); color: var(--text); }
-        .lang-btn.active { border-color: var(--accent-green); color: var(--text); background: rgba(48,209,88,0.1); }
+        .dialect-chip:hover { border-color: var(--accent-blue); color: var(--text); }
+        .dialect-chip.active { border-color: var(--accent-blue); color: var(--text); background: rgba(74,158,255,0.1); }
 
-        /* INPUTS */
         textarea {
             width: 100%; padding: 14px; margin-bottom: 16px;
             background: var(--card); border: 1px solid var(--border);
@@ -90,7 +196,6 @@
         select:focus { outline: none; border-color: var(--accent-blue); }
         select option { background: var(--bg2); }
 
-        /* COACH TOGGLE */
         .coach-toggle {
             display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
             background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px;
@@ -105,7 +210,6 @@
         .toggle-title { font-size: 13px; font-weight: 600; }
         .toggle-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-        /* BUTTON */
         button#btn {
             width: 100%; padding: 16px; background: var(--accent-blue); color: white;
             border: none; border-radius: 14px; font-family: 'Inter', sans-serif;
@@ -114,12 +218,10 @@
         button#btn:hover { background: #3a8ef0; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(74,158,255,0.3); }
         button#btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
 
-        /* LOADING */
         #loading { text-align: center; color: var(--accent-blue); font-size: 13px; margin-bottom: 16px; display: none; }
         .dots::after { content: ''; animation: dots 1.5s infinite; }
         @keyframes dots { 0%,20%{content:'.'} 40%{content:'..'} 60%,100%{content:'...'} }
 
-        /* RESPONSE CARDS */
         .response-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; animation: fadeIn 0.4s ease; }
         .response-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .response-badge { display: flex; align-items: center; gap: 6px; }
@@ -137,7 +239,6 @@
         .coach-label { font-size: 10px; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px; }
         .coach-text { font-size: 12px; color: var(--label); line-height: 1.5; }
 
-        /* EMAIL */
         #email-section { margin-top: 8px; background: var(--card); padding: 24px; border-radius: 16px; border: 1px solid var(--accent-orange); text-align: center; display: none; }
         #email-section h2 { font-size: 16px; margin-bottom: 8px; }
         #email-section p { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
@@ -149,6 +250,144 @@
 </head>
 <body>
 
+<!-- ==================== ONBOARDING ==================== -->
+<div id="onboarding">
+    <div class="ob-header">
+        <div class="ob-logo">CRUSHLY</div>
+        <div class="ob-sub">Tu coach de citas con IA</div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-dot active" id="dot1"></div>
+        <div class="progress-dot" id="dot2"></div>
+        <div class="progress-dot" id="dot3"></div>
+    </div>
+
+    <!-- PASO 1: País -->
+    <div class="ob-step active" id="step1">
+        <div class="ob-title">¿De dónde eres? 🌎</div>
+        <div class="ob-desc">Selecciona tu país para que Crushly adapte el dialecto y el estilo de conversación.</div>
+        <div class="ob-section-label">Selecciona tu país</div>
+        <div class="country-grid">
+            <button class="country-btn" onclick="selectCountry(this, 'Mexico', 'Español')" >
+                <span class="country-flag">🇲🇽</span>
+                <span class="country-info"><span class="country-name">México</span><span class="country-dialect">Español mexicano</span></span>
+            </button>
+            <button class="country-btn" onclick="selectCountry(this, 'Colombia', 'Español')">
+                <span class="country-flag">🇨🇴</span>
+                <span class="country-info"><span class="country-name">Colombia</span><span class="country-dialect">Español colombiano</span></span>
+            </button>
+            <button class="country-btn" onclick="selectCountry(this, 'Argentina', 'Español')">
+                <span class="country-flag">🇦🇷</span>
+                <span class="country-info"><span class="country-name">Argentina</span><span class="country-dialect">Rioplatense</span></span>
+            </button>
+            <button class="country-btn" onclick="selectCountry(this, 'España', 'Español')">
+                <span class="country-flag">🇪🇸</span>
+                <span class="country-info"><span class="country-name">España</span><span class="country-dialect">Castellano</span></span>
+            </button>
+            <button class="country-btn" onclick="selectCountry(this, 'Brasil', 'Português')">
+                <span class="country-flag">🇧🇷</span>
+                <span class="country-info"><span class="country-name">Brasil</span><span class="country-dialect">Português brasileiro</span></span>
+            </button>
+            <button class="country-btn" onclick="selectCountry(this, 'Peru', 'Español')">
+                <span class="country-flag">🇵🇪</span>
+                <span class="country-info"><span class="country-name">Perú</span><span class="country-dialect">Español peruano</span></span>
+            </button>
+        </div>
+        <button class="ob-btn" id="btn-step1" onclick="goStep(2)" disabled>Continuar →</button>
+    </div>
+
+    <!-- PASO 2: Perfil -->
+    <div class="ob-step" id="step2">
+        <div class="ob-title">Cuéntame sobre ti 👤</div>
+        <div class="ob-desc">Esto me ayuda a personalizar las respuestas para que suenen naturales y auténticas.</div>
+
+        <div class="ob-section-label">Soy</div>
+        <div class="gender-grid">
+            <button class="gender-btn" onclick="selectGender(this, 'male')">
+                <span class="gender-icon">👨</span><span>Hombre</span>
+            </button>
+            <button class="gender-btn" onclick="selectGender(this, 'female')">
+                <span class="gender-icon">👩</span><span>Mujer</span>
+            </button>
+            <button class="gender-btn" onclick="selectGender(this, 'other')">
+                <span class="gender-icon">🌈</span><span>Otro</span>
+            </button>
+        </div>
+
+        <div class="ob-section-label">Mi edad</div>
+        <div class="age-grid">
+            <button class="age-btn" onclick="selectAge(this, '18-24')">18 - 24 años</button>
+            <button class="age-btn" onclick="selectAge(this, '25-34')">25 - 34 años</button>
+            <button class="age-btn" onclick="selectAge(this, '35-44')">35 - 44 años</button>
+            <button class="age-btn" onclick="selectAge(this, '45+')">45+ años</button>
+        </div>
+
+        <div class="ob-section-label">Busco</div>
+        <div class="intent-grid">
+            <button class="intent-btn" onclick="selectIntent(this, 'serio')">
+                <span class="intent-icon">❤️</span><span>Algo serio y duradero</span>
+            </button>
+            <button class="intent-btn" onclick="selectIntent(this, 'casual')">
+                <span class="intent-icon">🔥</span><span>Algo casual y divertido</span>
+            </button>
+            <button class="intent-btn" onclick="selectIntent(this, 'social')">
+                <span class="intent-icon">🤝</span><span>Ampliar mi círculo social</span>
+            </button>
+        </div>
+
+        <div class="ob-section-label">Uso principalmente</div>
+        <div class="app-grid">
+            <button class="app-btn" onclick="selectApp(this, 'Tinder')">
+                <span class="app-icon">🔥</span><span>Tinder</span>
+            </button>
+            <button class="app-btn" onclick="selectApp(this, 'Bumble')">
+                <span class="app-icon">🐝</span><span>Bumble</span>
+            </button>
+            <button class="app-btn" onclick="selectApp(this, 'Hinge')">
+                <span class="app-icon">💘</span><span>Hinge</span>
+            </button>
+            <button class="app-btn" onclick="selectApp(this, 'Instagram')">
+                <span class="app-icon">📸</span><span>Instagram</span>
+            </button>
+            <button class="app-btn" onclick="selectApp(this, 'WhatsApp')">
+                <span class="app-icon">💬</span><span>WhatsApp</span>
+            </button>
+            <button class="app-btn" onclick="selectApp(this, 'Otra')">
+                <span class="app-icon">📱</span><span>Otra</span>
+            </button>
+        </div>
+
+        <button class="ob-btn" id="btn-step2" onclick="goStep(3)" disabled>Continuar →</button>
+    </div>
+
+    <!-- PASO 3: Bienvenida -->
+    <div class="ob-step" id="step3">
+        <div class="welcome-screen">
+            <div class="welcome-ring">
+                <svg width="80" height="80" viewBox="0 0 72 72">
+                    <circle cx="36" cy="36" r="30" fill="none" stroke="#1a2a4a" stroke-width="6"/>
+                    <circle cx="36" cy="36" r="30" fill="none" stroke="#ff453a" stroke-width="6" stroke-dasharray="188.4" stroke-dashoffset="47" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+                    <circle cx="36" cy="36" r="22" fill="none" stroke="#1a2a4a" stroke-width="5"/>
+                    <circle cx="36" cy="36" r="22" fill="none" stroke="#30d158" stroke-width="5" stroke-dasharray="138.2" stroke-dashoffset="35" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+                    <circle cx="36" cy="36" r="14" fill="none" stroke="#1a2a4a" stroke-width="4"/>
+                    <circle cx="36" cy="36" r="14" fill="none" stroke="#4a9eff" stroke-width="4" stroke-dasharray="87.9" stroke-dashoffset="22" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+                </svg>
+            </div>
+            <div class="welcome-title" id="welcome-title">¡Todo listo! 🎉</div>
+            <div class="welcome-desc" id="welcome-desc">Tu coach está configurado y listo para ayudarte a conquistar cualquier conversación.</div>
+            <div class="welcome-tags">
+                <span class="welcome-tag tag-blue" id="tag-country">🇵🇪 Perú</span>
+                <span class="welcome-tag tag-green" id="tag-gender">👨 Hombre</span>
+                <span class="welcome-tag tag-orange" id="tag-age">25-34 años</span>
+            </div>
+            <button class="ob-btn ob-btn-green" onclick="startApp()">Empezar a conquistar →</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== APP PRINCIPAL ==================== -->
+<div id="app">
     <div class="header">
         <div class="ring-container">
             <svg class="ring" viewBox="0 0 72 72">
@@ -161,43 +400,38 @@
             </svg>
         </div>
         <h1>CRUSHLY</h1>
-        <p class="sub" id="tagline">Tu coach de citas con IA</p>
+        <p class="sub">Tu coach de citas con IA</p>
     </div>
 
     <div class="stats-row">
         <div class="stat-card">
             <div class="stat-value green" id="stat-usos">3</div>
-            <div class="stat-label" id="label-intentos">Intentos</div>
+            <div class="stat-label">Intentos</div>
         </div>
         <div class="stat-card">
             <div class="stat-value orange">98%</div>
-            <div class="stat-label" id="label-efectividad">Efectividad</div>
+            <div class="stat-label">Efectividad</div>
         </div>
         <div class="stat-card">
             <div class="stat-value blue">IA</div>
-            <div class="stat-label" id="label-coach">Coach activo</div>
+            <div class="stat-label">Coach activo</div>
         </div>
     </div>
 
-    <div class="section-label" id="label-idioma">Idioma</div>
-    <div class="lang-row">
-        <button class="lang-btn active" onclick="setLang(this, 'Español')">🇪🇸 Español</button>
-        <button class="lang-btn" onclick="setLang(this, 'English')">🇺🇸 English</button>
-        <button class="lang-btn" onclick="setLang(this, 'Português')">🇧🇷 Português</button>
-        <button class="lang-btn" onclick="setLang(this, 'Français')">🇫🇷 Français</button>
+    <div class="section-label">Hablar como si fuera de</div>
+    <div class="dialect-bar" id="dialect-bar">
+        <button class="dialect-chip active" onclick="setDialect(this, 'Peru')">🇵🇪 Perú</button>
+        <button class="dialect-chip" onclick="setDialect(this, 'Mexico')">🇲🇽 México</button>
+        <button class="dialect-chip" onclick="setDialect(this, 'Colombia')">🇨🇴 Colombia</button>
+        <button class="dialect-chip" onclick="setDialect(this, 'Argentina')">🇦🇷 Argentina</button>
+        <button class="dialect-chip" onclick="setDialect(this, 'España')">🇪🇸 España</button>
+        <button class="dialect-chip" onclick="setDialect(this, 'Brasil')">🇧🇷 Brasil</button>
     </div>
 
-    <div class="section-label" id="label-genero">Soy</div>
-    <div class="gender-row">
-        <button class="gender-btn active" onclick="setGender(this, 'male')" id="btn-male">👨 Hombre</button>
-        <button class="gender-btn" onclick="setGender(this, 'female')" id="btn-female">👩 Mujer</button>
-        <button class="gender-btn" onclick="setGender(this, 'other')" id="btn-other">🌈 Otro</button>
-    </div>
+    <div class="section-label">Mensaje recibido</div>
+    <textarea id="msg" rows="4" placeholder="Pega el mensaje que recibiste..."></textarea>
 
-    <div class="section-label" id="label-mensaje">Mensaje recibido</div>
-    <textarea id="msg" rows="4" placeholder="Pegá el mensaje que recibiste..."></textarea>
-
-    <div class="section-label" id="label-estilo">Estilo de respuesta</div>
+    <div class="section-label">Estilo de respuesta</div>
     <select id="style">
         <option value="Flirty">Coqueto 👄</option>
         <option value="Funny">Divertido 😂</option>
@@ -212,8 +446,8 @@
             <span class="toggle-slider"></span>
         </label>
         <div class="toggle-info">
-            <div class="toggle-title" id="coach-title">⚡ Modo Coach</div>
-            <div class="toggle-sub" id="coach-sub">Explicá la psicología detrás de cada respuesta</div>
+            <div class="toggle-title">⚡ Modo Coach</div>
+            <div class="toggle-sub">Explicar la psicología detrás de cada respuesta</div>
         </div>
     </div>
 
@@ -222,217 +456,233 @@
     <div id="responses"></div>
 
     <div id="email-section">
-        <h2 id="email-title">Sin intentos restantes 🔒</h2>
-        <p id="email-sub">Dejá tu correo y te damos acceso anticipado gratis.</p>
+        <h2>Sin intentos restantes 🔒</h2>
+        <p>Deja tu correo y te damos acceso anticipado gratis.</p>
         <input type="email" id="email" placeholder="tu@email.com">
         <button class="email-btn" onclick="guardarCorreo()">Quiero acceso →</button>
     </div>
+</div>
 
-    <script>
-        const API_URL = "https://crushly-backend-2ai3.onrender.com/api/generate";
-        let usos = 0;
-        const MAX_USOS = 3;
-        let selectedLang = 'Español';
-        let selectedGender = 'male';
+<script>
+    const API_URL = "https://crushly-backend-2ai3.onrender.com/api/generate";
+    let usos = 0;
+    const MAX_USOS = 3;
 
-        const translations = {
-            'Español': {
-                tagline: 'Tu coach de citas con IA',
-                intentos: 'Intentos', efectividad: 'Efectividad', coach: 'Coach activo',
-                idioma: 'Idioma', genero: 'Soy', mensaje: 'Mensaje recibido',
-                estilo: 'Estilo de respuesta', btnGenerar: 'Generar respuestas',
-                analizando: 'Analizando mensaje', coachTitle: '⚡ Modo Coach',
-                coachSub: 'Explicá la psicología detrás de cada respuesta',
-                porQueFunciona: '⚡ Por qué funciona',
-                segura: 'Segura', atrevida: 'Atrevida', creativa: 'Creativa',
-                copiar: 'Copiar', copiado: '✓ Copiado',
-                emailTitle: 'Sin intentos restantes 🔒',
-                emailSub: 'Dejá tu correo y te damos acceso anticipado gratis.',
-                placeholder: 'Pegá el mensaje que recibiste...',
-                male: '👨 Hombre', female: '👩 Mujer', other: '🌈 Otro',
-                styles: ['Coqueto 👄', 'Divertido 😂', 'Misterioso 🌙', 'Directo 🎯', 'Social 🤝']
-            },
-            'English': {
-                tagline: 'Your AI dating coach',
-                intentos: 'Attempts', efectividad: 'Effectiveness', coach: 'Coach active',
-                idioma: 'Language', genero: 'I am', mensaje: 'Received message',
-                estilo: 'Response style', btnGenerar: 'Generate responses',
-                analizando: 'Analyzing message', coachTitle: '⚡ Coach Mode',
-                coachSub: 'Explain the psychology behind each response',
-                porQueFunciona: '⚡ Why it works',
-                segura: 'Safe', atrevida: 'Bold', creativa: 'Creative',
-                copiar: 'Copy', copiado: '✓ Copied',
-                emailTitle: 'No attempts left 🔒',
-                emailSub: 'Leave your email and we\'ll give you early access.',
-                placeholder: 'Paste the message you received...',
-                male: '👨 Man', female: '👩 Woman', other: '🌈 Other',
-                styles: ['Flirty 👄', 'Funny 😂', 'Mysterious 🌙', 'Direct 🎯', 'Social 🤝']
-            },
-            'Português': {
-                tagline: 'Seu coach de relacionamentos com IA',
-                intentos: 'Tentativas', efectividad: 'Eficácia', coach: 'Coach ativo',
-                idioma: 'Idioma', genero: 'Sou', mensaje: 'Mensagem recebida',
-                estilo: 'Estilo de resposta', btnGenerar: 'Gerar respostas',
-                analizando: 'Analisando mensagem', coachTitle: '⚡ Modo Coach',
-                coachSub: 'Explique a psicologia por trás de cada resposta',
-                porQueFunciona: '⚡ Por que funciona',
-                segura: 'Segura', atrevida: 'Ousada', creativa: 'Criativa',
-                copiar: 'Copiar', copiado: '✓ Copiado',
-                emailTitle: 'Sem tentativas restantes 🔒',
-                emailSub: 'Deixe seu email e daremos acesso antecipado.',
-                placeholder: 'Cole a mensagem que você recebeu...',
-                male: '👨 Homem', female: '👩 Mulher', other: '🌈 Outro',
-                styles: ['Flerte 👄', 'Divertido 😂', 'Misterioso 🌙', 'Direto 🎯', 'Social 🤝']
-            },
-            'Français': {
-                tagline: 'Votre coach de rencontres IA',
-                intentos: 'Essais', efectividad: 'Efficacité', coach: 'Coach actif',
-                idioma: 'Langue', genero: 'Je suis', mensaje: 'Message reçu',
-                estilo: 'Style de réponse', btnGenerar: 'Générer des réponses',
-                analizando: 'Analyse du message', coachTitle: '⚡ Mode Coach',
-                coachSub: 'Expliquer la psychologie derrière chaque réponse',
-                porQueFunciona: '⚡ Pourquoi ça marche',
-                segura: 'Sûre', atrevida: 'Audacieuse', creativa: 'Créative',
-                copiar: 'Copier', copiado: '✓ Copié',
-                emailTitle: 'Plus d\'essais restants 🔒',
-                emailSub: 'Laissez votre email pour un accès anticipé.',
-                placeholder: 'Collez le message reçu...',
-                male: '👨 Homme', female: '👩 Femme', other: '🌈 Autre',
-                styles: ['Flirt 👄', 'Drôle 😂', 'Mystérieux 🌙', 'Direct 🎯', 'Social 🤝']
+    // Estado del usuario
+    let userProfile = {
+        country: '',
+        language: 'Español',
+        gender: '',
+        ageRange: '',
+        intent: '',
+        app: '',
+        targetDialect: ''
+    };
+
+    // ==================== ONBOARDING ====================
+    function selectCountry(btn, country, language) {
+        document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        userProfile.country = country;
+        userProfile.language = language;
+        userProfile.targetDialect = country;
+        document.getElementById('btn-step1').disabled = false;
+    }
+
+    function selectGender(btn, gender) {
+        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        userProfile.gender = gender;
+        checkStep2();
+    }
+
+    function selectAge(btn, age) {
+        document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        userProfile.ageRange = age;
+        checkStep2();
+    }
+
+    function selectIntent(btn, intent) {
+        document.querySelectorAll('.intent-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        userProfile.intent = intent;
+        checkStep2();
+    }
+
+    function selectApp(btn, app) {
+        document.querySelectorAll('.app-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        userProfile.app = app;
+        checkStep2();
+    }
+
+    function checkStep2() {
+        const ready = userProfile.gender && userProfile.ageRange && userProfile.intent && userProfile.app;
+        document.getElementById('btn-step2').disabled = !ready;
+    }
+
+    function goStep(step) {
+        document.querySelectorAll('.ob-step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + step).classList.add('active');
+
+        // Actualizar progress dots
+        for (let i = 1; i <= 3; i++) {
+            const dot = document.getElementById('dot' + i);
+            dot.classList.remove('active', 'done');
+            if (i < step) dot.classList.add('done');
+            else if (i === step) dot.classList.add('active');
+        }
+
+        // Si es paso 3, actualizar bienvenida
+        if (step === 3) {
+            const countryFlags = {
+                'Mexico': '🇲🇽', 'Colombia': '🇨🇴', 'Argentina': '🇦🇷',
+                'España': '🇪🇸', 'Brasil': '🇧🇷', 'Peru': '🇵🇪'
+            };
+            const countryNames = {
+                'Mexico': 'México', 'Colombia': 'Colombia', 'Argentina': 'Argentina',
+                'España': 'España', 'Brasil': 'Brasil', 'Peru': 'Perú'
+            };
+            const genderLabels = { 'male': '👨 Hombre', 'female': '👩 Mujer', 'other': '🌈 Otro' };
+
+            document.getElementById('tag-country').textContent = `${countryFlags[userProfile.country]} ${countryNames[userProfile.country]}`;
+            document.getElementById('tag-gender').textContent = genderLabels[userProfile.gender];
+            document.getElementById('tag-age').textContent = `${userProfile.ageRange} años`;
+        }
+    }
+
+    function startApp() {
+        document.getElementById('onboarding').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+
+        // Marcar dialecto activo según país del usuario
+        const dialectBtns = document.querySelectorAll('.dialect-chip');
+        dialectBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('onclick').includes(userProfile.country)) {
+                btn.classList.add('active');
             }
-        };
-
-        function setLang(btn, lang) {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedLang = lang;
-            applyTranslations();
-        }
-
-        function setGender(btn, gender) {
-            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedGender = gender;
-        }
-
-        function applyTranslations() {
-            const t = translations[selectedLang];
-            document.getElementById('tagline').textContent = t.tagline;
-            document.getElementById('label-intentos').textContent = t.intentos;
-            document.getElementById('label-efectividad').textContent = t.efectividad;
-            document.getElementById('label-coach').textContent = t.coach;
-            document.getElementById('label-idioma').textContent = t.idioma;
-            document.getElementById('label-genero').textContent = t.genero;
-            document.getElementById('label-mensaje').textContent = t.mensaje;
-            document.getElementById('label-estilo').textContent = t.estilo;
-            document.getElementById('btn').textContent = t.btnGenerar;
-            document.getElementById('coach-title').textContent = t.coachTitle;
-            document.getElementById('coach-sub').textContent = t.coachSub;
-            document.getElementById('email-title').textContent = t.emailTitle;
-            document.getElementById('email-sub').textContent = t.emailSub;
-            document.getElementById('msg').placeholder = t.placeholder;
-            document.getElementById('btn-male').textContent = t.male;
-            document.getElementById('btn-female').textContent = t.female;
-            document.getElementById('btn-other').textContent = t.other;
-            const styleEl = document.getElementById('style');
-            const styleValues = ['Flirty','Funny','Mysterious','Direct','Social'];
-            t.styles.forEach((label, i) => { styleEl.options[i].text = label; });
-        }
-
-        function actualizarStats() {
-            document.getElementById('stat-usos').textContent = MAX_USOS - usos;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('msg').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generar(); }
-            });
         });
+    }
 
-        async function generar() {
-            const t = translations[selectedLang];
-            if (usos >= MAX_USOS) {
-                document.getElementById('email-section').style.display = 'block';
-                return;
-            }
-            const msg = document.getElementById('msg').value;
-            const style = document.getElementById('style').value;
-            const coachMode = document.getElementById('coachMode').checked;
-            if (!msg.trim()) return alert(t.placeholder);
-            document.getElementById('btn').disabled = true;
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('responses').innerHTML = '';
+    // ==================== APP PRINCIPAL ====================
+    function setDialect(btn, dialect) {
+        document.querySelectorAll('.dialect-chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        userProfile.targetDialect = dialect;
+    }
 
-            try {
-                const res = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: msg, style, naturalness: 8, language: selectedLang, coachMode, gender: selectedGender })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    const configs = [
-                        { label: t.segura, dot: "#30d158" },
-                        { label: t.atrevida, dot: "#ff453a" },
-                        { label: t.creativa, dot: "#4a9eff" }
-                    ];
-                    let html = '';
-                    data.opciones.forEach((op, i) => {
-                        const cfg = configs[i] || { label: `${i+1}`, dot: "#6b7fa3" };
-                        const texto = op.respuesta || '';
-                        const coach = op.coach || '';
-                        html += `
-                            <div class="response-card">
-                                <div class="response-header">
-                                    <div class="response-badge">
-                                        <div class="badge-dot" style="background:${cfg.dot}"></div>
-                                        <span class="response-title" style="color:${cfg.dot}">${cfg.label}</span>
-                                    </div>
-                                    <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'").replace(/\n/g, ' ')}\`, '${selectedLang}')">${t.copiar}</button>
-                                </div>
-                                <div class="response-text">${texto}</div>
-                                ${coachMode && coach ? `
-                                <div class="coach-box">
-                                    <div class="coach-label">${t.porQueFunciona}</div>
-                                    <div class="coach-text">${coach}</div>
-                                </div>` : ''}
-                            </div>`;
-                    });
-                    document.getElementById('responses').innerHTML = html;
-                    usos++;
-                    actualizarStats();
-                    if (usos >= MAX_USOS) {
-                        setTimeout(() => {
-                            document.getElementById('email-section').style.display = 'block';
-                            document.getElementById('btn').style.display = 'none';
-                        }, 1000);
-                    }
-                } else {
-                    alert("Error: " + data.error);
-                }
-            } catch (e) {
-                alert("Error de conexión. Esperá 30 segundos y probá de nuevo.");
-            } finally {
-                document.getElementById('btn').disabled = false;
-                document.getElementById('loading').style.display = 'none';
-            }
+    function actualizarStats() {
+        document.getElementById('stat-usos').textContent = MAX_USOS - usos;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('msg').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generar(); }
+        });
+    });
+
+    async function generar() {
+        if (usos >= MAX_USOS) {
+            document.getElementById('email-section').style.display = 'block';
+            return;
         }
 
-        function copiar(btn, texto, lang) {
-            const t = translations[lang] || translations['Español'];
-            navigator.clipboard.writeText(texto).then(() => {
-                btn.textContent = t.copiado;
-                btn.classList.add('copied');
-                setTimeout(() => { btn.textContent = t.copiar; btn.classList.remove('copied'); }, 2000);
+        const msg = document.getElementById('msg').value;
+        const style = document.getElementById('style').value;
+        const coachMode = document.getElementById('coachMode').checked;
+
+        if (!msg.trim()) return alert("Pega un mensaje primero");
+
+        document.getElementById('btn').disabled = true;
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('responses').innerHTML = '';
+
+        try {
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    message: msg,
+                    style,
+                    naturalness: 8,
+                    language: userProfile.language,
+                    coachMode,
+                    gender: userProfile.gender,
+                    country: userProfile.country,
+                    ageRange: userProfile.ageRange,
+                    targetDialect: userProfile.targetDialect
+                })
             });
-        }
 
-        function guardarCorreo() {
-            const email = document.getElementById('email').value;
-            if (!email.includes("@")) return alert("Email inválido");
-            document.getElementById('email-section').innerHTML =
-                "<p style='color:#30d158;font-weight:bold;font-size:14px;'>✓ Registrado. Te avisamos pronto.</p>";
+            const data = await res.json();
+
+            if (data.success) {
+                const configs = [
+                    { label: "Segura", dot: "#30d158" },
+                    { label: "Atrevida", dot: "#ff453a" },
+                    { label: "Creativa", dot: "#4a9eff" }
+                ];
+                let html = '';
+
+                data.opciones.forEach((op, i) => {
+                    const cfg = configs[i] || { label: `Opción ${i+1}`, dot: "#6b7fa3" };
+                    const texto = op.respuesta || '';
+                    const coach = op.coach || '';
+                    html += `
+                        <div class="response-card">
+                            <div class="response-header">
+                                <div class="response-badge">
+                                    <div class="badge-dot" style="background:${cfg.dot}"></div>
+                                    <span class="response-title" style="color:${cfg.dot}">${cfg.label}</span>
+                                </div>
+                                <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'").replace(/\n/g, ' ')}\`)">Copiar</button>
+                            </div>
+                            <div class="response-text">${texto}</div>
+                            ${coachMode && coach ? `
+                            <div class="coach-box">
+                                <div class="coach-label">⚡ Por qué funciona</div>
+                                <div class="coach-text">${coach}</div>
+                            </div>` : ''}
+                        </div>`;
+                });
+
+                document.getElementById('responses').innerHTML = html;
+                usos++;
+                actualizarStats();
+
+                if (usos >= MAX_USOS) {
+                    setTimeout(() => {
+                        document.getElementById('email-section').style.display = 'block';
+                        document.getElementById('btn').style.display = 'none';
+                    }, 1000);
+                }
+            } else {
+                alert("Error: " + data.error);
+            }
+        } catch (e) {
+            alert("Error de conexión. Espera 30 segundos y prueba de nuevo.");
+        } finally {
+            document.getElementById('btn').disabled = false;
+            document.getElementById('loading').style.display = 'none';
         }
-    </script>
+    }
+
+    function copiar(btn, texto) {
+        navigator.clipboard.writeText(texto).then(() => {
+            btn.textContent = '✓ Copiado';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+        });
+    }
+
+    function guardarCorreo() {
+        const email = document.getElementById('email').value;
+        if (!email.includes("@")) return alert("Pon un correo válido");
+        document.getElementById('email-section').innerHTML =
+            "<p style='color:#30d158;font-weight:bold;font-size:14px;'>✓ Registrado. Te avisamos pronto.</p>";
+    }
+</script>
 </body>
 </html>

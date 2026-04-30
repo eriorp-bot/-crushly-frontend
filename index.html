@@ -410,6 +410,11 @@
 
     <script>
         const API_URL = "https://crushly-backend-2ai3.onrender.com/api/generate";
+        document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('msg').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generar(); }
+    });
+});
         let usos = 0;
         const MAX_USOS = 3;
 

@@ -4,108 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crushly - IA Dating Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050505;
-            --accent: #ff0033;
+            --bg: #0a1628;
+            --bg2: #0f1f3d;
+            --bg3: #162040;
+            --card: #1a2a4a;
+            --border: #1e3a5f;
+            --accent-blue: #4a9eff;
+            --accent-green: #30d158;
+            --accent-orange: #ff9f0a;
+            --accent-red: #ff453a;
             --text: #ffffff;
-            --secondary-bg: #121212;
-            --border: #1e1e1e;
-            --muted: #666666;
-            --neon: 0 0 10px rgba(255, 0, 51, 0.4);
+            --muted: #6b7fa3;
+            --label: #8ea3c3;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: 'JetBrains Mono', monospace;
-            padding: 20px;
-            max-width: 480px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 24px 20px;
+            max-width: 420px;
             margin: 0 auto;
             min-height: 100vh;
         }
-        h1 {
-            color: var(--accent);
+
+        /* HEADER */
+        .header {
             text-align: center;
-            font-size: 32px;
-            letter-spacing: 4px;
-            margin: 20px 0 4px;
-            text-shadow: var(--neon);
+            margin-bottom: 28px;
+        }
+        .ring-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .ring {
+            width: 72px;
+            height: 72px;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text);
         }
         p.sub {
-            text-align: center;
             font-size: 12px;
             color: var(--muted);
-            margin-bottom: 28px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
         }
-        textarea, select {
+
+        /* STATS ROW */
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            flex: 1;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 10px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .green { color: var(--accent-green); }
+        .orange { color: var(--accent-orange); }
+        .blue { color: var(--accent-blue); }
+
+        /* INPUTS */
+        .section-label {
+            font-size: 11px;
+            color: var(--label);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        textarea {
             width: 100%;
             padding: 14px;
-            margin-bottom: 12px;
-            background: var(--secondary-bg);
+            margin-bottom: 16px;
+            background: var(--card);
             border: 1px solid var(--border);
             color: var(--text);
-            border-radius: 0;
-            font-family: 'JetBrains Mono', monospace;
+            border-radius: 14px;
+            font-family: 'Inter', sans-serif;
             font-size: 14px;
             resize: none;
+            line-height: 1.5;
         }
-        textarea:focus, select:focus {
+        textarea:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: var(--neon);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.15);
         }
-        select option { background: var(--secondary-bg); }
+        textarea::placeholder { color: var(--muted); }
+
+        select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7fa3' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        select:focus { outline: none; border-color: var(--accent-blue); }
+        select option { background: var(--bg2); }
+
+        /* COACH TOGGLE */
         .coach-toggle {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-            font-size: 12px;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
         }
-        .coach-toggle input[type="checkbox"] {
-            accent-color: var(--accent);
-            width: 16px;
-            height: 16px;
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: var(--border);
+            border-radius: 26px;
             cursor: pointer;
+            transition: 0.3s;
         }
-        .coach-toggle label { cursor: pointer; }
+        .toggle-slider:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked + .toggle-slider { background: var(--accent-green); }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(18px); }
+        .toggle-info { flex: 1; }
+        .toggle-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .toggle-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* BUTTON */
         button#btn {
             width: 100%;
             padding: 16px;
-            background: var(--accent);
+            background: var(--accent-blue);
             color: white;
             border: none;
-            border-radius: 0;
-            font-family: 'JetBrains Mono', monospace;
+            border-radius: 14px;
+            font-family: 'Inter', sans-serif;
             font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 15px;
             cursor: pointer;
-            transition: box-shadow 0.2s;
+            transition: all 0.2s;
+            margin-bottom: 20px;
         }
-        button#btn:hover { box-shadow: var(--neon); }
-        button#btn:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
+        button#btn:hover { background: #3a8ef0; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(74,158,255,0.3); }
+        button#btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* LOADING */
         #loading {
             text-align: center;
-            margin-top: 20px;
-            color: var(--accent);
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            color: var(--accent-blue);
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
         }
+        .dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+        @keyframes dots {
+            0%,20% { content: '.'; }
+            40% { content: '..'; }
+            60%,100% { content: '...'; }
+        }
+
+        /* RESPONSE CARDS */
         .response-card {
-            background: var(--secondary-bg);
-            border-left: 3px solid var(--accent);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 16px;
-            margin-top: 14px;
+            margin-bottom: 12px;
             animation: fadeIn 0.4s ease;
         }
         .response-header {
@@ -114,81 +236,96 @@
             align-items: center;
             margin-bottom: 10px;
         }
+        .response-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
         .response-title {
             font-size: 11px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
             font-weight: 700;
-        }
-        .copy-btn {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            padding: 4px 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+        .copy-btn {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--label);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            padding: 5px 12px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s;
-            border-radius: 0;
-            width: auto;
+            font-weight: 500;
         }
-        .copy-btn:hover { background: var(--accent); color: white; box-shadow: var(--neon); }
-        .response-text { font-size: 14px; line-height: 1.6; color: var(--text); }
+        .copy-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .copy-btn.copied { border-color: var(--accent-green); color: var(--accent-green); }
+        .response-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text);
+        }
         .coach-box {
             margin-top: 12px;
-            padding: 10px 14px;
-            background: #0a0a0a;
-            border-left: 3px solid #333;
-            font-size: 12px;
-            color: #aaaaaa;
-            line-height: 1.5;
+            padding: 12px;
+            background: rgba(74, 158, 255, 0.08);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 8px 8px 0;
         }
         .coach-label {
             font-size: 10px;
-            color: var(--muted);
+            color: var(--accent-blue);
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 700;
             margin-bottom: 4px;
         }
+        .coach-text { font-size: 12px; color: var(--label); line-height: 1.5; }
+
+        /* EMAIL SECTION */
         #email-section {
-            margin-top: 24px;
-            background: var(--secondary-bg);
+            margin-top: 8px;
+            background: var(--card);
             padding: 24px;
-            border: 1px solid var(--accent);
+            border-radius: 16px;
+            border: 1px solid var(--accent-orange);
             text-align: center;
+            display: none;
         }
-        #email-section h2 { font-size: 16px; margin-bottom: 10px; letter-spacing: 1px; }
+        #email-section h2 { font-size: 16px; margin-bottom: 8px; }
         #email-section p { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
         input[type="email"] {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             margin-bottom: 12px;
             background: var(--bg);
             border: 1px solid var(--border);
             color: var(--text);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 13px;
-            border-radius: 0;
+            border-radius: 10px;
         }
+        input[type="email"]:focus { outline: none; border-color: var(--accent-orange); }
         .email-btn {
             width: 100%;
-            padding: 14px;
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            padding: 13px;
+            background: var(--accent-orange);
+            border: none;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s;
-            border-radius: 0;
         }
-        .email-btn:hover { background: var(--accent); color: white; }
-        .hidden { display: none; }
+        .email-btn:hover { background: #e8900a; }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
@@ -196,32 +333,77 @@
     </style>
 </head>
 <body>
-    <h1>CRUSHLY</h1>
-    <p class="sub">Tu coach de citas con IA</p>
 
+    <!-- HEADER -->
+    <div class="header">
+        <div class="ring-container">
+            <svg class="ring" viewBox="0 0 72 72">
+                <circle cx="36" cy="36" r="30" fill="none" stroke="#1a2a4a" stroke-width="6"/>
+                <circle cx="36" cy="36" r="30" fill="none" stroke="#ff453a" stroke-width="6"
+                    stroke-dasharray="188.4" stroke-dashoffset="47" stroke-linecap="round"
+                    transform="rotate(-90 36 36)"/>
+                <circle cx="36" cy="36" r="22" fill="none" stroke="#1a2a4a" stroke-width="5"/>
+                <circle cx="36" cy="36" r="22" fill="none" stroke="#30d158" stroke-width="5"
+                    stroke-dasharray="138.2" stroke-dashoffset="35" stroke-linecap="round"
+                    transform="rotate(-90 36 36)"/>
+                <circle cx="36" cy="36" r="14" fill="none" stroke="#1a2a4a" stroke-width="4"/>
+                <circle cx="36" cy="36" r="14" fill="none" stroke="#4a9eff" stroke-width="4"
+                    stroke-dasharray="87.9" stroke-dashoffset="22" stroke-linecap="round"
+                    transform="rotate(-90 36 36)"/>
+            </svg>
+        </div>
+        <h1>CRUSHLY</h1>
+        <p class="sub">Tu coach de citas con IA</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-value green" id="stat-usos">3</div>
+            <div class="stat-label">Intentos</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value orange">98%</div>
+            <div class="stat-label">Efectividad</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value blue">IA</div>
+            <div class="stat-label">Coach activo</div>
+        </div>
+    </div>
+
+    <!-- INPUTS -->
+    <div class="section-label">Mensaje recibido</div>
     <textarea id="msg" rows="4" placeholder="Pegá el mensaje que recibiste..."></textarea>
 
+    <div class="section-label">Estilo de respuesta</div>
     <select id="style">
-        <option value="Flirty">Flirty 👄</option>
-        <option value="Funny">Funny 😂</option>
-        <option value="Mysterious">Mysterious 🌙</option>
-        <option value="Direct">Direct 🎯</option>
+        <option value="Flirty">Coqueto 👄</option>
+        <option value="Funny">Divertido 😂</option>
+        <option value="Mysterious">Misterioso 🌙</option>
+        <option value="Direct">Directo 🎯</option>
         <option value="Social">Social 🤝</option>
     </select>
 
     <div class="coach-toggle">
-        <input type="checkbox" id="coachMode">
-        <label for="coachMode">⚡ Modo Coach — explicá la psicología detrás</label>
+        <label class="toggle-switch">
+            <input type="checkbox" id="coachMode">
+            <span class="toggle-slider"></span>
+        </label>
+        <div class="toggle-info">
+            <div class="toggle-title">⚡ Modo Coach</div>
+            <div class="toggle-sub">Explicá la psicología detrás de cada respuesta</div>
+        </div>
     </div>
 
-    <button id="btn" onclick="generar()">// GENERAR RESPUESTAS</button>
+    <button id="btn" onclick="generar()">Generar respuestas</button>
 
-    <div id="loading" class="hidden">[ Analizando mensaje... ]</div>
+    <div id="loading">Analizando mensaje<span class="dots"></span></div>
     <div id="responses"></div>
 
-    <div id="email-section" class="hidden">
-        <h2>Sin créditos gratis 🔒</h2>
-        <p>Dejá tu correo y te damos acceso anticipado.</p>
+    <div id="email-section">
+        <h2>Sin intentos restantes 🔒</h2>
+        <p>Dejá tu correo y te damos acceso anticipado gratis.</p>
         <input type="email" id="email" placeholder="tu@email.com">
         <button class="email-btn" onclick="guardarCorreo()">Quiero acceso →</button>
     </div>
@@ -231,9 +413,13 @@
         let usos = 0;
         const MAX_USOS = 3;
 
+        function actualizarStats() {
+            document.getElementById('stat-usos').textContent = MAX_USOS - usos;
+        }
+
         async function generar() {
             if (usos >= MAX_USOS) {
-                document.getElementById('email-section').classList.remove('hidden');
+                document.getElementById('email-section').style.display = 'block';
                 return;
             }
 
@@ -244,7 +430,7 @@
             if (!msg.trim()) return alert("Pegá un mensaje primero");
 
             document.getElementById('btn').disabled = true;
-            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('loading').style.display = 'block';
             document.getElementById('responses').innerHTML = '';
 
             try {
@@ -257,33 +443,42 @@
                 const data = await res.json();
 
                 if (data.success) {
-                    const tipos = ["Segura ✅", "Atrevida 🔥", "Creativa 🧠"];
+                    const configs = [
+                        { label: "Segura", dot: "#30d158" },
+                        { label: "Atrevida", dot: "#ff453a" },
+                        { label: "Creativa", dot: "#4a9eff" }
+                    ];
                     let html = '';
 
                     data.opciones.forEach((op, i) => {
+                        const cfg = configs[i] || { label: `Opción ${i+1}`, dot: "#6b7fa3" };
                         const texto = op.respuesta || '';
                         const coach = op.coach || '';
                         html += `
                             <div class="response-card">
                                 <div class="response-header">
-                                    <span class="response-title">${tipos[i] || 'Opción ' + (i+1)}</span>
-                                    <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'")}\`)">Copiar</button>
+                                    <div class="response-badge">
+                                        <div class="badge-dot" style="background:${cfg.dot}"></div>
+                                        <span class="response-title" style="color:${cfg.dot}">${cfg.label}</span>
+                                    </div>
+                                    <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'").replace(/\n/g, ' ')}\`)">Copiar</button>
                                 </div>
                                 <div class="response-text">${texto}</div>
                                 ${coachMode && coach ? `
                                 <div class="coach-box">
                                     <div class="coach-label">⚡ Por qué funciona</div>
-                                    ${coach}
+                                    <div class="coach-text">${coach}</div>
                                 </div>` : ''}
                             </div>`;
                     });
 
                     document.getElementById('responses').innerHTML = html;
                     usos++;
+                    actualizarStats();
 
                     if (usos >= MAX_USOS) {
                         setTimeout(() => {
-                            document.getElementById('email-section').classList.remove('hidden');
+                            document.getElementById('email-section').style.display = 'block';
                             document.getElementById('btn').style.display = 'none';
                         }, 1000);
                     }
@@ -294,14 +489,18 @@
                 alert("Error de conexión. Si es la primera vez, esperá 30 segundos y probá de nuevo.");
             } finally {
                 document.getElementById('btn').disabled = false;
-                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('loading').style.display = 'none';
             }
         }
 
         function copiar(btn, texto) {
             navigator.clipboard.writeText(texto).then(() => {
-                btn.textContent = 'Copiado ✓';
-                setTimeout(() => btn.textContent = 'Copiar', 2000);
+                btn.textContent = '✓ Copiado';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copiar';
+                    btn.classList.remove('copied');
+                }, 2000);
             });
         }
 
@@ -309,7 +508,7 @@
             const email = document.getElementById('email').value;
             if (!email.includes("@")) return alert("Poné un correo válido");
             document.getElementById('email-section').innerHTML =
-                "<p style='color: #ff0033; font-weight: bold; letter-spacing: 1px;'>✓ REGISTRADO. TE AVISAMOS PRONTO.</p>";
+                "<p style='color: #30d158; font-weight: bold; font-size: 14px;'>✓ Registrado. Te avisamos pronto.</p>";
         }
     </script>
 </body>

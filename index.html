@@ -23,32 +23,73 @@
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            padding: 20px 16px 40px;
+            padding: 0;
             max-width: 460px;
             margin: 0 auto;
             min-height: 100vh;
         }
-        .header { text-align: center; padding: 28px 0 24px; }
+
+        /* HEADER */
+        .header { text-align: center; padding: 28px 16px 20px; }
         .logo-wrap { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-        .logo-icon { width: 36px; height: 36px; }
-        .logo-text {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 38px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            color: #fff;
-            text-shadow: var(--neon);
-        }
-        .logo-text span { color: var(--accent); text-shadow: var(--neon); }
-        .logo-line {
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
-            margin: 6px auto 10px;
-            opacity: 0.7;
-        }
+        .logo-icon { width: 34px; height: 34px; }
+        .logo-text { font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; letter-spacing: 4px; color: #fff; text-shadow: var(--neon); }
+        .logo-text span { color: var(--accent); }
+        .logo-line { width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent); margin: 6px auto 8px; opacity: 0.6; }
         .tagline { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
-        textarea, select {
+
+        /* PROGRESS BAR */
+        .progress-bar { display: flex; gap: 6px; padding: 0 16px 20px; }
+        .progress-step { flex: 1; height: 3px; border-radius: 2px; background: var(--border); transition: background 0.3s; }
+        .progress-step.active { background: var(--accent); box-shadow: var(--neon-sm); }
+        .progress-step.done { background: var(--accent2); }
+
+        /* SCREENS */
+        .screen { display: none; padding: 0 16px 40px; animation: fadeUp 0.3s ease; }
+        .screen.active { display: block; }
+
+        /* COUNTRY GRID */
+        .screen-title { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+        .screen-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+        .section-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+        .country-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+        .country-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+        .country-card:hover { border-color: var(--accent); }
+        .country-card.selected { border-color: var(--accent); background: rgba(255,45,85,0.08); box-shadow: var(--neon-sm); }
+        .country-code { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; color: var(--accent); width: 28px; }
+        .country-info { flex: 1; }
+        .country-name { font-size: 14px; font-weight: 600; }
+        .country-dialect { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+        /* STYLE GRID */
+        .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+        .style-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .style-card:hover { border-color: var(--accent); }
+        .style-card.selected { border-color: var(--accent); background: rgba(255,45,85,0.08); box-shadow: var(--neon-sm); }
+        .style-emoji { font-size: 24px; margin-bottom: 6px; }
+        .style-name { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1px; }
+        .style-desc { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+        /* MAIN SCREEN */
+        textarea {
             width: 100%;
             padding: 14px 16px;
             margin-bottom: 10px;
@@ -57,12 +98,12 @@
             color: var(--text);
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: border-color 0.2s, box-shadow 0.2s;
             resize: none;
         }
-        textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: var(--neon-sm); }
-        select option { background: var(--card); }
+        textarea:focus { outline: none; border-color: var(--accent); box-shadow: var(--neon-sm); }
+
         .coach-toggle {
             display: flex;
             align-items: center;
@@ -71,19 +112,39 @@
             padding: 12px 14px;
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
         }
         .coach-toggle input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
-        .coach-toggle label { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; cursor: pointer; }
-        .coach-toggle label span { color: var(--accent); }
-        #btn {
+        .coach-toggle label { font-size: 12px; color: var(--muted); cursor: pointer; }
+        .coach-toggle label span { color: var(--accent); font-weight: 600; }
+
+        /* SELECTED BADGE */
+        .selected-info {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .badge-tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .badge-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* BUTTONS */
+        .btn-primary {
             width: 100%;
             padding: 16px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
             font-size: 16px;
@@ -92,9 +153,25 @@
             cursor: pointer;
             transition: box-shadow 0.2s, transform 0.1s;
         }
-        #btn:hover { box-shadow: var(--neon); transform: translateY(-1px); }
-        #btn:active { transform: translateY(0); }
-        #btn:disabled { background: #2a2a2a; color: #444; cursor: not-allowed; box-shadow: none; transform: none; }
+        .btn-primary:hover { box-shadow: var(--neon); transform: translateY(-1px); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { background: #2a2a2a; color: #444; cursor: not-allowed; box-shadow: none; transform: none; }
+        .btn-outline {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* LOADING */
         #loading {
             text-align: center;
             margin-top: 20px;
@@ -105,17 +182,19 @@
             animation: pulse 1.4s ease-in-out infinite;
         }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+        /* RESPONSE CARDS */
         .response-card {
             background: var(--card);
             border: 1px solid var(--border);
             border-left: 3px solid var(--accent);
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 16px;
             margin-top: 12px;
             animation: fadeUp 0.4s ease;
         }
         .response-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .badge { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+        .response-badge { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
         .copy-btn {
             background: transparent;
             border: 1px solid var(--border);
@@ -135,15 +214,17 @@
             padding: 10px 14px;
             background: rgba(255,45,85,0.05);
             border: 1px solid rgba(255,45,85,0.15);
-            border-radius: 4px;
+            border-radius: 6px;
         }
         .coach-label { font-size: 10px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
         .coach-text { font-size: 12px; color: #888; line-height: 1.5; }
+
+        /* EMAIL GATE */
         #email-section {
             margin-top: 20px;
             background: var(--card);
             border: 1px solid var(--accent);
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 24px;
             text-align: center;
         }
@@ -158,7 +239,7 @@
             color: var(--text);
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            border-radius: 6px;
+            border-radius: 8px;
         }
         input[type="email"]:focus { outline: none; border-color: var(--accent); }
         .email-btn {
@@ -173,15 +254,18 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.2s;
         }
-        .email-btn:hover { background: var(--accent); color: white; box-shadow: var(--neon-sm); }
+        .email-btn:hover { background: var(--accent); color: white; }
+
         .hidden { display: none; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
+
+    <!-- HEADER -->
     <div class="header">
         <div class="logo-wrap">
             <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -195,47 +279,163 @@
         <div class="tagline">Your AI Dating Coach</div>
     </div>
 
-    <textarea id="msg" rows="4" placeholder="Pegá el mensaje que recibiste..."></textarea>
-    <select id="style">
-        <option value="Flirty">Flirty 👄</option>
-        <option value="Funny">Funny 😂</option>
-        <option value="Mysterious">Mysterious 🌙</option>
-        <option value="Direct">Direct 🎯</option>
-        <option value="Social">Social 🤝</option>
-    </select>
-    <div class="coach-toggle" onclick="document.getElementById('coachMode').click()">
-        <input type="checkbox" id="coachMode">
-        <label for="coachMode">⚡ <span>Modo Coach</span> — explicá la psicología detrás</label>
+    <!-- PROGRESS -->
+    <div class="progress-bar">
+        <div class="progress-step active" id="step1"></div>
+        <div class="progress-step" id="step2"></div>
+        <div class="progress-step" id="step3"></div>
     </div>
-    <button id="btn" onclick="generar()">⚡ GENERAR RESPUESTAS</button>
-    <div id="loading" class="hidden">[ Analizando mensaje... ]</div>
-    <div id="responses"></div>
-    <div id="email-section" class="hidden">
-        <h2>SIN CREDITOS 🔒</h2>
-        <p>Dejá tu correo y te damos acceso anticipado gratis.</p>
-        <input type="email" id="email" placeholder="tu@email.com">
-        <button class="email-btn" onclick="guardarCorreo()">Quiero acceso →</button>
+
+    <!-- PANTALLA 1: PAIS -->
+    <div class="screen active" id="screen-country">
+        <div class="screen-title">¿De dónde sos? 🌍</div>
+        <div class="screen-sub">Crushly adapta el dialecto y el estilo según tu región.</div>
+        <div class="section-label">Selecciona tu país</div>
+        <div class="country-grid">
+            <div class="country-card" onclick="selectCountry(this,'México','Español mexicano')">
+                <div class="country-code">MX</div>
+                <div class="country-info"><div class="country-name">México</div><div class="country-dialect">Español mexicano</div></div>
+            </div>
+            <div class="country-card" onclick="selectCountry(this,'Colombia','Español colombiano')">
+                <div class="country-code">CO</div>
+                <div class="country-info"><div class="country-name">Colombia</div><div class="country-dialect">Español colombiano</div></div>
+            </div>
+            <div class="country-card" onclick="selectCountry(this,'Argentina','Rioplatense')">
+                <div class="country-code">AR</div>
+                <div class="country-info"><div class="country-name">Argentina</div><div class="country-dialect">Rioplatense</div></div>
+            </div>
+            <div class="country-card" onclick="selectCountry(this,'España','Castellano')">
+                <div class="country-code">ES</div>
+                <div class="country-info"><div class="country-name">España</div><div class="country-dialect">Castellano</div></div>
+            </div>
+            <div class="country-card" onclick="selectCountry(this,'Brasil','Português brasileiro')">
+                <div class="country-code">BR</div>
+                <div class="country-info"><div class="country-name">Brasil</div><div class="country-dialect">Português brasileiro</div></div>
+            </div>
+            <div class="country-card" onclick="selectCountry(this,'Perú','Español peruano')">
+                <div class="country-code">PE</div>
+                <div class="country-info"><div class="country-name">Perú</div><div class="country-dialect">Español peruano</div></div>
+            </div>
+        </div>
+        <button class="btn-primary" id="btn-country" onclick="goToScreen(2)" disabled>Continuar →</button>
+    </div>
+
+    <!-- PANTALLA 2: ESTILO -->
+    <div class="screen" id="screen-style">
+        <div class="screen-title">¿Cuál es tu estilo? ⚡</div>
+        <div class="screen-sub">Elegí cómo querés sonar. Podés cambiarlo después.</div>
+        <div class="section-label">Modo de conversación</div>
+        <div class="style-grid">
+            <div class="style-card" onclick="selectStyle(this,'Flirty')">
+                <div class="style-emoji">👄</div>
+                <div class="style-name">FLIRTY</div>
+                <div class="style-desc">Coqueto y atractivo</div>
+            </div>
+            <div class="style-card" onclick="selectStyle(this,'Funny')">
+                <div class="style-emoji">😂</div>
+                <div class="style-name">FUNNY</div>
+                <div class="style-desc">Humor y carisma</div>
+            </div>
+            <div class="style-card" onclick="selectStyle(this,'Mysterious')">
+                <div class="style-emoji">🌙</div>
+                <div class="style-name">MYSTERIOUS</div>
+                <div class="style-desc">Misterioso e intrigante</div>
+            </div>
+            <div class="style-card" onclick="selectStyle(this,'Direct')">
+                <div class="style-emoji">🎯</div>
+                <div class="style-name">DIRECT</div>
+                <div class="style-desc">Directo al punto</div>
+            </div>
+            <div class="style-card" onclick="selectStyle(this,'Social')">
+                <div class="style-emoji">🤝</div>
+                <div class="style-name">SOCIAL</div>
+                <div class="style-desc">Romper el hielo</div>
+            </div>
+            <div class="style-card" onclick="selectStyle(this,'Romantic')">
+                <div class="style-emoji">💫</div>
+                <div class="style-name">ROMANTIC</div>
+                <div class="style-desc">Suave y emocional</div>
+            </div>
+        </div>
+        <button class="btn-primary" id="btn-style" onclick="goToScreen(3)" disabled>Continuar →</button>
+        <button class="btn-outline" onclick="goToScreen(1)">← Volver</button>
+    </div>
+
+    <!-- PANTALLA 3: CHAT -->
+    <div class="screen" id="screen-chat">
+        <div class="selected-info" id="selected-tags"></div>
+        <textarea id="msg" rows="4" placeholder="Pega el mensaje que recibiste..."></textarea>
+        <div class="coach-toggle" onclick="document.getElementById('coachMode').click()">
+            <input type="checkbox" id="coachMode">
+            <label for="coachMode">⚡ <span>Modo Coach</span> — explicá la psicología detrás</label>
+        </div>
+        <button class="btn-primary" id="btn-gen" onclick="generar()">⚡ GENERAR RESPUESTAS</button>
+        <button class="btn-outline" onclick="goToScreen(2)">← Cambiar estilo</button>
+        <div id="loading" class="hidden">[ Analizando mensaje... ]</div>
+        <div id="responses"></div>
+        <div id="email-section" class="hidden">
+            <h2>SIN CREDITOS 🔒</h2>
+            <p>Deja tu correo y te damos acceso anticipado gratis.</p>
+            <input type="email" id="email" placeholder="tu@email.com">
+            <button class="email-btn" onclick="guardarCorreo()">Quiero acceso →</button>
+        </div>
     </div>
 
     <script>
         const API_URL = "https://crushly-backend-2ai3.onrender.com/api/generate";
         let usos = 0;
         const MAX_USOS = 3;
+        let selectedCountry = '';
+        let selectedLanguage = '';
+        let selectedStyle = '';
+
+        function goToScreen(n) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + ['','country','style','chat'][n]).classList.add('active');
+            document.querySelectorAll('.progress-step').forEach((s, i) => {
+                s.classList.remove('active', 'done');
+                if (i < n - 1) s.classList.add('done');
+                else if (i === n - 1) s.classList.add('active');
+            });
+            if (n === 3) updateTags();
+        }
+
+        function selectCountry(el, country, lang) {
+            document.querySelectorAll('.country-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedCountry = country;
+            selectedLanguage = lang;
+            document.getElementById('btn-country').disabled = false;
+        }
+
+        function selectStyle(el, style) {
+            document.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedStyle = style;
+            document.getElementById('btn-style').disabled = false;
+        }
+
+        function updateTags() {
+            const tags = document.getElementById('selected-tags');
+            tags.innerHTML = `
+                <span class="badge-tag" onclick="goToScreen(1)">🌍 ${selectedCountry}</span>
+                <span class="badge-tag" onclick="goToScreen(2)">⚡ ${selectedStyle}</span>
+            `;
+        }
 
         async function generar() {
             if (usos >= MAX_USOS) { document.getElementById('email-section').classList.remove('hidden'); return; }
             const msg = document.getElementById('msg').value;
-            const style = document.getElementById('style').value;
             const coachMode = document.getElementById('coachMode').checked;
             if (!msg.trim()) return alert("Pega un mensaje primero");
-            document.getElementById('btn').disabled = true;
+            document.getElementById('btn-gen').disabled = true;
             document.getElementById('loading').classList.remove('hidden');
             document.getElementById('responses').innerHTML = '';
             try {
                 const res = await fetch(API_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: msg, style, naturalness: 8, language: "Español", coachMode })
+                    body: JSON.stringify({ message: msg, style: selectedStyle || 'Flirty', naturalness: 8, language: selectedLanguage || 'Español', coachMode })
                 });
                 const data = await res.json();
                 if (data.success) {
@@ -246,7 +446,7 @@
                         const coach = op.coach || '';
                         html += `<div class="response-card">
                             <div class="response-header">
-                                <span class="badge">${tipos[i] || 'Opcion ' + (i+1)}</span>
+                                <span class="response-badge">${tipos[i] || 'Opcion ' + (i+1)}</span>
                                 <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'")}\`)">Copiar</button>
                             </div>
                             <div class="response-text">${texto}</div>
@@ -258,14 +458,14 @@
                     if (usos >= MAX_USOS) {
                         setTimeout(() => {
                             document.getElementById('email-section').classList.remove('hidden');
-                            document.getElementById('btn').style.display = 'none';
+                            document.getElementById('btn-gen').style.display = 'none';
                         }, 1000);
                     }
                 } else { alert("Error: " + data.error); }
             } catch(e) {
                 alert("Error de conexion. Si es la primera vez, espera 30 segundos y proba de nuevo.");
             } finally {
-                document.getElementById('btn').disabled = false;
+                document.getElementById('btn-gen').disabled = false;
                 document.getElementById('loading').classList.add('hidden');
             }
         }

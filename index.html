@@ -4,685 +4,285 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crushly - IA Dating Coach</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a1628;
-            --bg2: #0f1f3d;
-            --card: #1a2a4a;
-            --border: #1e3a5f;
-            --accent-blue: #4a9eff;
-            --accent-green: #30d158;
-            --accent-orange: #ff9f0a;
-            --accent-red: #ff453a;
+            --bg: #0a0a0a;
+            --bg2: #111111;
+            --card: #161616;
+            --border: #222222;
+            --accent: #ff2d55;
+            --accent2: #ff6b35;
             --text: #ffffff;
-            --muted: #6b7fa3;
-            --label: #8ea3c3;
+            --muted: #666666;
+            --neon: 0 0 20px rgba(255,45,85,0.4);
+            --neon-sm: 0 0 10px rgba(255,45,85,0.3);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-        }
-
-        /* ONBOARDING */
-        #onboarding {
-            max-width: 420px;
+            padding: 20px 16px 40px;
+            max-width: 460px;
             margin: 0 auto;
-            padding: 40px 24px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
-        .ob-header { text-align: center; margin-bottom: 40px; }
-        .ob-logo { font-size: 28px; font-weight: 700; letter-spacing: 2px; color: var(--text); }
-        .ob-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
-        .ob-step { display: none; flex-direction: column; flex: 1; }
-        .ob-step.active { display: flex; }
-        .ob-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-        .ob-desc { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
-        .ob-section-label { font-size: 11px; color: var(--label); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
-
-        /* PROGRESS BAR */
-        .progress-bar { display: flex; gap: 6px; margin-bottom: 32px; }
-        .progress-dot { height: 4px; flex: 1; background: var(--border); border-radius: 4px; transition: background 0.3s; }
-        .progress-dot.active { background: var(--accent-blue); }
-        .progress-dot.done { background: var(--accent-green); }
-
-        /* GRID SELECTORS */
-        .country-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .country-btn {
-            padding: 14px 12px; background: var(--card); border: 1px solid var(--border);
-            border-radius: 14px; color: var(--text); font-family: 'Inter', sans-serif;
-            font-size: 14px; cursor: pointer; transition: all 0.2s; text-align: left;
-            display: flex; align-items: center; gap: 10px;
+        .header { text-align: center; padding: 28px 0 24px; }
+        .logo-wrap { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+        .logo-icon { width: 36px; height: 36px; }
+        .logo-text {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: var(--neon);
         }
-        .country-btn:hover { border-color: var(--accent-blue); }
-        .country-btn.active { border-color: var(--accent-blue); background: rgba(74,158,255,0.1); }
-        .country-flag { font-size: 22px; }
-        .country-info { display: flex; flex-direction: column; }
-        .country-name { font-size: 13px; font-weight: 600; }
-        .country-dialect { font-size: 11px; color: var(--muted); }
-
-        .gender-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .gender-btn {
-            padding: 16px 8px; background: var(--card); border: 1px solid var(--border);
-            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
-            font-size: 13px; cursor: pointer; transition: all 0.2s; text-align: center;
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
+        .logo-text span { color: var(--accent); text-shadow: var(--neon); }
+        .logo-line {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+            margin: 6px auto 10px;
+            opacity: 0.7;
         }
-        .gender-btn .gender-icon { font-size: 24px; }
-        .gender-btn:hover { border-color: var(--accent-blue); color: var(--text); }
-        .gender-btn.active { border-color: var(--accent-blue); background: rgba(74,158,255,0.1); color: var(--text); }
-
-        .age-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .age-btn {
-            padding: 14px; background: var(--card); border: 1px solid var(--border);
-            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
-            font-size: 13px; cursor: pointer; transition: all 0.2s; text-align: center;
+        .tagline { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+        textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            resize: none;
         }
-        .age-btn:hover { border-color: var(--accent-orange); color: var(--text); }
-        .age-btn.active { border-color: var(--accent-orange); background: rgba(255,159,10,0.1); color: var(--text); }
-
-        .intent-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
-        .intent-btn {
-            padding: 14px 16px; background: var(--card); border: 1px solid var(--border);
-            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
-            font-size: 13px; cursor: pointer; transition: all 0.2s; text-align: left;
-            display: flex; align-items: center; gap: 12px;
-        }
-        .intent-btn:hover { border-color: var(--accent-green); color: var(--text); }
-        .intent-btn.active { border-color: var(--accent-green); background: rgba(48,209,88,0.1); color: var(--text); }
-        .intent-icon { font-size: 20px; }
-
-        .app-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .app-btn {
-            padding: 12px 8px; background: var(--card); border: 1px solid var(--border);
-            border-radius: 14px; color: var(--muted); font-family: 'Inter', sans-serif;
-            font-size: 12px; cursor: pointer; transition: all 0.2s; text-align: center;
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
-        }
-        .app-btn .app-icon { font-size: 22px; }
-        .app-btn:hover { border-color: var(--accent-blue); color: var(--text); }
-        .app-btn.active { border-color: var(--accent-blue); background: rgba(74,158,255,0.1); color: var(--text); }
-
-        /* WELCOME SCREEN */
-        .welcome-screen {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; flex: 1; text-align: center;
-        }
-        .welcome-ring { margin-bottom: 24px; }
-        .welcome-title { font-size: 26px; font-weight: 700; margin-bottom: 12px; }
-        .welcome-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 32px; max-width: 300px; }
-        .welcome-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
-        .welcome-tag {
-            padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
-        }
-        .tag-blue { background: rgba(74,158,255,0.15); color: var(--accent-blue); border: 1px solid rgba(74,158,255,0.3); }
-        .tag-green { background: rgba(48,209,88,0.15); color: var(--accent-green); border: 1px solid rgba(48,209,88,0.3); }
-        .tag-orange { background: rgba(255,159,10,0.15); color: var(--accent-orange); border: 1px solid rgba(255,159,10,0.3); }
-
-        /* BUTTONS */
-        .ob-btn {
-            width: 100%; padding: 16px; background: var(--accent-blue); color: white;
-            border: none; border-radius: 14px; font-family: 'Inter', sans-serif;
-            font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s;
-            margin-top: auto;
-        }
-        .ob-btn:hover { background: #3a8ef0; transform: translateY(-1px); }
-        .ob-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
-        .ob-btn-green { background: var(--accent-green); }
-        .ob-btn-green:hover { background: #28c050; }
-
-        /* MAIN APP */
-        #app {
-            max-width: 420px;
-            margin: 0 auto;
-            padding: 24px 20px;
-            min-height: 100vh;
-            display: none;
-        }
-
-        .header { text-align: center; margin-bottom: 20px; }
-        .ring-container { display: flex; justify-content: center; margin-bottom: 10px; }
-        .ring { width: 64px; height: 64px; }
-        h1 { font-size: 24px; font-weight: 700; letter-spacing: 2px; }
-        p.sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
-
-        .stats-row { display: flex; gap: 10px; margin-bottom: 20px; }
-        .stat-card { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 10px; text-align: center; }
-        .stat-value { font-size: 18px; font-weight: 700; }
-        .stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; text-transform: uppercase; }
-        .green { color: var(--accent-green); }
-        .orange { color: var(--accent-orange); }
-        .blue { color: var(--accent-blue); }
-
-        .section-label { font-size: 11px; color: var(--label); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600; }
-
-        /* DIALECT SELECTOR EN APP */
-        .dialect-bar {
-            display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto;
-            padding-bottom: 4px; scrollbar-width: none;
-        }
-        .dialect-bar::-webkit-scrollbar { display: none; }
-        .dialect-chip {
-            flex-shrink: 0; padding: 6px 12px; background: var(--card);
-            border: 1px solid var(--border); border-radius: 20px;
-            font-size: 12px; color: var(--muted); cursor: pointer; transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .dialect-chip:hover { border-color: var(--accent-blue); color: var(--text); }
-        .dialect-chip.active { border-color: var(--accent-blue); color: var(--text); background: rgba(74,158,255,0.1); }
-
-        textarea {
-            width: 100%; padding: 14px; margin-bottom: 16px;
-            background: var(--card); border: 1px solid var(--border);
-            color: var(--text); border-radius: 14px;
-            font-family: 'Inter', sans-serif; font-size: 14px; resize: none; line-height: 1.5;
-        }
-        textarea:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(74,158,255,0.15); }
-        textarea::placeholder { color: var(--muted); }
-
-        select {
-            width: 100%; padding: 14px; margin-bottom: 16px;
-            background: var(--card); border: 1px solid var(--border);
-            color: var(--text); border-radius: 14px;
-            font-family: 'Inter', sans-serif; font-size: 14px; appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7fa3' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 16px center;
-        }
-        select:focus { outline: none; border-color: var(--accent-blue); }
-        select option { background: var(--bg2); }
-
+        textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: var(--neon-sm); }
+        select option { background: var(--card); }
         .coach-toggle {
-            display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
-            background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding: 12px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
         }
-        .toggle-switch { position: relative; width: 44px; height: 26px; flex-shrink: 0; }
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .toggle-slider { position: absolute; inset: 0; background: var(--border); border-radius: 26px; cursor: pointer; transition: 0.3s; }
-        .toggle-slider:before { content: ''; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: 0.3s; }
-        .toggle-switch input:checked + .toggle-slider { background: var(--accent-green); }
-        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(18px); }
-        .toggle-info { flex: 1; }
-        .toggle-title { font-size: 13px; font-weight: 600; }
-        .toggle-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-        button#btn {
-            width: 100%; padding: 16px; background: var(--accent-blue); color: white;
-            border: none; border-radius: 14px; font-family: 'Inter', sans-serif;
-            font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s; margin-bottom: 20px;
+        .coach-toggle input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
+        .coach-toggle label { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; cursor: pointer; }
+        .coach-toggle label span { color: var(--accent); }
+        #btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.1s;
         }
-        button#btn:hover { background: #3a8ef0; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(74,158,255,0.3); }
-        button#btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
-
-        #loading { text-align: center; color: var(--accent-blue); font-size: 13px; margin-bottom: 16px; display: none; }
-        .dots::after { content: ''; animation: dots 1.5s infinite; }
-        @keyframes dots { 0%,20%{content:'.'} 40%{content:'..'} 60%,100%{content:'...'} }
-
-        .response-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; animation: fadeIn 0.4s ease; }
+        #btn:hover { box-shadow: var(--neon); transform: translateY(-1px); }
+        #btn:active { transform: translateY(0); }
+        #btn:disabled { background: #2a2a2a; color: #444; cursor: not-allowed; box-shadow: none; transform: none; }
+        #loading {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--accent);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulse 1.4s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .response-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 12px;
+            animation: fadeUp 0.4s ease;
+        }
         .response-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .response-badge { display: flex; align-items: center; gap: 6px; }
-        .badge-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .response-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .badge { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
         .copy-btn {
-            background: var(--bg2); border: 1px solid var(--border); color: var(--label);
-            font-family: 'Inter', sans-serif; font-size: 11px; padding: 5px 12px;
-            border-radius: 20px; cursor: pointer; transition: all 0.2s; font-weight: 500;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .copy-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
-        .copy-btn.copied { border-color: var(--accent-green); color: var(--accent-green); }
-        .response-text { font-size: 14px; line-height: 1.6; }
-        .coach-box { margin-top: 12px; padding: 12px; background: rgba(74,158,255,0.08); border-left: 3px solid var(--accent-blue); border-radius: 0 8px 8px 0; }
-        .coach-label { font-size: 10px; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px; }
-        .coach-text { font-size: 12px; color: var(--label); line-height: 1.5; }
-
-        #email-section { margin-top: 8px; background: var(--card); padding: 24px; border-radius: 16px; border: 1px solid var(--accent-orange); text-align: center; display: none; }
-        #email-section h2 { font-size: 16px; margin-bottom: 8px; }
-        #email-section p { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
-        input[type="email"] { width: 100%; padding: 12px 14px; margin-bottom: 12px; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 10px; }
-        .email-btn { width: 100%; padding: 13px; background: var(--accent-orange); border: none; color: white; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer; }
-
-        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .copy-btn.copied { border-color: #30d158; color: #30d158; }
+        .response-text { font-size: 14px; line-height: 1.65; color: #dddddd; }
+        .coach-box {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(255,45,85,0.05);
+            border: 1px solid rgba(255,45,85,0.15);
+            border-radius: 4px;
+        }
+        .coach-label { font-size: 10px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
+        .coach-text { font-size: 12px; color: #888; line-height: 1.5; }
+        #email-section {
+            margin-top: 20px;
+            background: var(--card);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+        #email-section h2 { font-family: 'Rajdhani', sans-serif; font-size: 20px; letter-spacing: 2px; margin-bottom: 8px; }
+        #email-section p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            border-radius: 6px;
+        }
+        input[type="email"]:focus { outline: none; border-color: var(--accent); }
+        .email-btn {
+            width: 100%;
+            padding: 13px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .email-btn:hover { background: var(--accent); color: white; box-shadow: var(--neon-sm); }
+        .hidden { display: none; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
-<!-- ==================== ONBOARDING ==================== -->
-<div id="onboarding">
-    <div class="ob-header">
-        <div class="ob-logo">CRUSHLY</div>
-        <div class="ob-sub">Tu coach de citas con IA</div>
-    </div>
-
-    <div class="progress-bar">
-        <div class="progress-dot active" id="dot1"></div>
-        <div class="progress-dot" id="dot2"></div>
-        <div class="progress-dot" id="dot3"></div>
-    </div>
-
-    <!-- PASO 1: País -->
-    <div class="ob-step active" id="step1">
-        <div class="ob-title">¿De dónde eres? 🌎</div>
-        <div class="ob-desc">Selecciona tu país para que Crushly adapte el dialecto y el estilo de conversación.</div>
-        <div class="ob-section-label">Selecciona tu país</div>
-        <div class="country-grid">
-            <button class="country-btn" onclick="selectCountry(this, 'Mexico', 'Español')" >
-                <span class="country-flag">🇲🇽</span>
-                <span class="country-info"><span class="country-name">México</span><span class="country-dialect">Español mexicano</span></span>
-            </button>
-            <button class="country-btn" onclick="selectCountry(this, 'Colombia', 'Español')">
-                <span class="country-flag">🇨🇴</span>
-                <span class="country-info"><span class="country-name">Colombia</span><span class="country-dialect">Español colombiano</span></span>
-            </button>
-            <button class="country-btn" onclick="selectCountry(this, 'Argentina', 'Español')">
-                <span class="country-flag">🇦🇷</span>
-                <span class="country-info"><span class="country-name">Argentina</span><span class="country-dialect">Rioplatense</span></span>
-            </button>
-            <button class="country-btn" onclick="selectCountry(this, 'España', 'Español')">
-                <span class="country-flag">🇪🇸</span>
-                <span class="country-info"><span class="country-name">España</span><span class="country-dialect">Castellano</span></span>
-            </button>
-            <button class="country-btn" onclick="selectCountry(this, 'Brasil', 'Português')">
-                <span class="country-flag">🇧🇷</span>
-                <span class="country-info"><span class="country-name">Brasil</span><span class="country-dialect">Português brasileiro</span></span>
-            </button>
-            <button class="country-btn" onclick="selectCountry(this, 'Peru', 'Español')">
-                <span class="country-flag">🇵🇪</span>
-                <span class="country-info"><span class="country-name">Perú</span><span class="country-dialect">Español peruano</span></span>
-            </button>
-        </div>
-        <button class="ob-btn" id="btn-step1" onclick="goStep(2)" disabled>Continuar →</button>
-    </div>
-
-    <!-- PASO 2: Perfil -->
-    <div class="ob-step" id="step2">
-        <div class="ob-title">Cuéntame sobre ti 👤</div>
-        <div class="ob-desc">Esto me ayuda a personalizar las respuestas para que suenen naturales y auténticas.</div>
-
-        <div class="ob-section-label">Soy</div>
-        <div class="gender-grid">
-            <button class="gender-btn" onclick="selectGender(this, 'male')">
-                <span class="gender-icon">👨</span><span>Hombre</span>
-            </button>
-            <button class="gender-btn" onclick="selectGender(this, 'female')">
-                <span class="gender-icon">👩</span><span>Mujer</span>
-            </button>
-            <button class="gender-btn" onclick="selectGender(this, 'other')">
-                <span class="gender-icon">🌈</span><span>Otro</span>
-            </button>
-        </div>
-
-        <div class="ob-section-label">Mi edad</div>
-        <div class="age-grid">
-            <button class="age-btn" onclick="selectAge(this, '18-24')">18 - 24 años</button>
-            <button class="age-btn" onclick="selectAge(this, '25-34')">25 - 34 años</button>
-            <button class="age-btn" onclick="selectAge(this, '35-44')">35 - 44 años</button>
-            <button class="age-btn" onclick="selectAge(this, '45+')">45+ años</button>
-        </div>
-
-        <div class="ob-section-label">Busco</div>
-        <div class="intent-grid">
-            <button class="intent-btn" onclick="selectIntent(this, 'serio')">
-                <span class="intent-icon">❤️</span><span>Algo serio y duradero</span>
-            </button>
-            <button class="intent-btn" onclick="selectIntent(this, 'casual')">
-                <span class="intent-icon">🔥</span><span>Algo casual y divertido</span>
-            </button>
-            <button class="intent-btn" onclick="selectIntent(this, 'social')">
-                <span class="intent-icon">🤝</span><span>Ampliar mi círculo social</span>
-            </button>
-        </div>
-
-        <div class="ob-section-label">Uso principalmente</div>
-        <div class="app-grid">
-            <button class="app-btn" onclick="selectApp(this, 'Tinder')">
-                <span class="app-icon">🔥</span><span>Tinder</span>
-            </button>
-            <button class="app-btn" onclick="selectApp(this, 'Bumble')">
-                <span class="app-icon">🐝</span><span>Bumble</span>
-            </button>
-            <button class="app-btn" onclick="selectApp(this, 'Hinge')">
-                <span class="app-icon">💘</span><span>Hinge</span>
-            </button>
-            <button class="app-btn" onclick="selectApp(this, 'Instagram')">
-                <span class="app-icon">📸</span><span>Instagram</span>
-            </button>
-            <button class="app-btn" onclick="selectApp(this, 'WhatsApp')">
-                <span class="app-icon">💬</span><span>WhatsApp</span>
-            </button>
-            <button class="app-btn" onclick="selectApp(this, 'Otra')">
-                <span class="app-icon">📱</span><span>Otra</span>
-            </button>
-        </div>
-
-        <button class="ob-btn" id="btn-step2" onclick="goStep(3)" disabled>Continuar →</button>
-    </div>
-
-    <!-- PASO 3: Bienvenida -->
-    <div class="ob-step" id="step3">
-        <div class="welcome-screen">
-            <div class="welcome-ring">
-                <svg width="80" height="80" viewBox="0 0 72 72">
-                    <circle cx="36" cy="36" r="30" fill="none" stroke="#1a2a4a" stroke-width="6"/>
-                    <circle cx="36" cy="36" r="30" fill="none" stroke="#ff453a" stroke-width="6" stroke-dasharray="188.4" stroke-dashoffset="47" stroke-linecap="round" transform="rotate(-90 36 36)"/>
-                    <circle cx="36" cy="36" r="22" fill="none" stroke="#1a2a4a" stroke-width="5"/>
-                    <circle cx="36" cy="36" r="22" fill="none" stroke="#30d158" stroke-width="5" stroke-dasharray="138.2" stroke-dashoffset="35" stroke-linecap="round" transform="rotate(-90 36 36)"/>
-                    <circle cx="36" cy="36" r="14" fill="none" stroke="#1a2a4a" stroke-width="4"/>
-                    <circle cx="36" cy="36" r="14" fill="none" stroke="#4a9eff" stroke-width="4" stroke-dasharray="87.9" stroke-dashoffset="22" stroke-linecap="round" transform="rotate(-90 36 36)"/>
-                </svg>
-            </div>
-            <div class="welcome-title" id="welcome-title">¡Todo listo! 🎉</div>
-            <div class="welcome-desc" id="welcome-desc">Tu coach está configurado y listo para ayudarte a conquistar cualquier conversación.</div>
-            <div class="welcome-tags">
-                <span class="welcome-tag tag-blue" id="tag-country">🇵🇪 Perú</span>
-                <span class="welcome-tag tag-green" id="tag-gender">👨 Hombre</span>
-                <span class="welcome-tag tag-orange" id="tag-age">25-34 años</span>
-            </div>
-            <button class="ob-btn ob-btn-green" onclick="startApp()">Empezar a conquistar →</button>
-        </div>
-    </div>
-</div>
-
-<!-- ==================== APP PRINCIPAL ==================== -->
-<div id="app">
     <div class="header">
-        <div class="ring-container">
-            <svg class="ring" viewBox="0 0 72 72">
-                <circle cx="36" cy="36" r="30" fill="none" stroke="#1a2a4a" stroke-width="6"/>
-                <circle cx="36" cy="36" r="30" fill="none" stroke="#ff453a" stroke-width="6" stroke-dasharray="188.4" stroke-dashoffset="47" stroke-linecap="round" transform="rotate(-90 36 36)"/>
-                <circle cx="36" cy="36" r="22" fill="none" stroke="#1a2a4a" stroke-width="5"/>
-                <circle cx="36" cy="36" r="22" fill="none" stroke="#30d158" stroke-width="5" stroke-dasharray="138.2" stroke-dashoffset="35" stroke-linecap="round" transform="rotate(-90 36 36)"/>
-                <circle cx="36" cy="36" r="14" fill="none" stroke="#1a2a4a" stroke-width="4"/>
-                <circle cx="36" cy="36" r="14" fill="none" stroke="#4a9eff" stroke-width="4" stroke-dasharray="87.9" stroke-dashoffset="22" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+        <div class="logo-wrap">
+            <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="18,2 22,14 34,14 24,22 28,34 18,26 8,34 12,22 2,14 14,14" fill="none" stroke="#ff2d55" stroke-width="2" stroke-linejoin="round"/>
+                <polygon points="18,8 21,16 30,16 23,21 26,30 18,25 10,30 13,21 6,16 15,16" fill="#ff2d55" opacity="0.15"/>
+                <circle cx="18" cy="18" r="3" fill="#ff6b35"/>
             </svg>
+            <div class="logo-text">CRUSH<span>LY</span></div>
         </div>
-        <h1>CRUSHLY</h1>
-        <p class="sub">Tu coach de citas con IA</p>
+        <div class="logo-line"></div>
+        <div class="tagline">Your AI Dating Coach</div>
     </div>
 
-    <div class="stats-row">
-        <div class="stat-card">
-            <div class="stat-value green" id="stat-usos">3</div>
-            <div class="stat-label">Intentos</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value orange">98%</div>
-            <div class="stat-label">Efectividad</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value blue">IA</div>
-            <div class="stat-label">Coach activo</div>
-        </div>
-    </div>
-
-    <div class="section-label">Hablar como si fuera de</div>
-    <div class="dialect-bar" id="dialect-bar">
-        <button class="dialect-chip active" onclick="setDialect(this, 'Peru')">🇵🇪 Perú</button>
-        <button class="dialect-chip" onclick="setDialect(this, 'Mexico')">🇲🇽 México</button>
-        <button class="dialect-chip" onclick="setDialect(this, 'Colombia')">🇨🇴 Colombia</button>
-        <button class="dialect-chip" onclick="setDialect(this, 'Argentina')">🇦🇷 Argentina</button>
-        <button class="dialect-chip" onclick="setDialect(this, 'España')">🇪🇸 España</button>
-        <button class="dialect-chip" onclick="setDialect(this, 'Brasil')">🇧🇷 Brasil</button>
-    </div>
-
-    <div class="section-label">Mensaje recibido</div>
-    <textarea id="msg" rows="4" placeholder="Pega el mensaje que recibiste..."></textarea>
-
-    <div class="section-label">Estilo de respuesta</div>
+    <textarea id="msg" rows="4" placeholder="Pegá el mensaje que recibiste..."></textarea>
     <select id="style">
-        <option value="Flirty">Coqueto 👄</option>
-        <option value="Funny">Divertido 😂</option>
-        <option value="Mysterious">Misterioso 🌙</option>
-        <option value="Direct">Directo 🎯</option>
+        <option value="Flirty">Flirty 👄</option>
+        <option value="Funny">Funny 😂</option>
+        <option value="Mysterious">Mysterious 🌙</option>
+        <option value="Direct">Direct 🎯</option>
         <option value="Social">Social 🤝</option>
     </select>
-
-    <div class="coach-toggle">
-        <label class="toggle-switch">
-            <input type="checkbox" id="coachMode">
-            <span class="toggle-slider"></span>
-        </label>
-        <div class="toggle-info">
-            <div class="toggle-title">⚡ Modo Coach</div>
-            <div class="toggle-sub">Explicar la psicología detrás de cada respuesta</div>
-        </div>
+    <div class="coach-toggle" onclick="document.getElementById('coachMode').click()">
+        <input type="checkbox" id="coachMode">
+        <label for="coachMode">⚡ <span>Modo Coach</span> — explicá la psicología detrás</label>
     </div>
-
-    <button id="btn" onclick="generar()">Generar respuestas</button>
-    <div id="loading">Analizando mensaje<span class="dots"></span></div>
+    <button id="btn" onclick="generar()">⚡ GENERAR RESPUESTAS</button>
+    <div id="loading" class="hidden">[ Analizando mensaje... ]</div>
     <div id="responses"></div>
-
-    <div id="email-section">
-        <h2>Sin intentos restantes 🔒</h2>
-        <p>Deja tu correo y te damos acceso anticipado gratis.</p>
+    <div id="email-section" class="hidden">
+        <h2>SIN CREDITOS 🔒</h2>
+        <p>Dejá tu correo y te damos acceso anticipado gratis.</p>
         <input type="email" id="email" placeholder="tu@email.com">
         <button class="email-btn" onclick="guardarCorreo()">Quiero acceso →</button>
     </div>
-</div>
 
-<script>
-    const API_URL = "https://crushly-backend-2ai3.onrender.com/api/generate";
-    let usos = 0;
-    const MAX_USOS = 3;
+    <script>
+        const API_URL = "https://crushly-backend-2ai3.onrender.com/api/generate";
+        let usos = 0;
+        const MAX_USOS = 3;
 
-    // Estado del usuario
-    let userProfile = {
-        country: '',
-        language: 'Español',
-        gender: '',
-        ageRange: '',
-        intent: '',
-        app: '',
-        targetDialect: ''
-    };
-
-    // ==================== ONBOARDING ====================
-    function selectCountry(btn, country, language) {
-        document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        userProfile.country = country;
-        userProfile.language = language;
-        userProfile.targetDialect = country;
-        document.getElementById('btn-step1').disabled = false;
-    }
-
-    function selectGender(btn, gender) {
-        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        userProfile.gender = gender;
-        checkStep2();
-    }
-
-    function selectAge(btn, age) {
-        document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        userProfile.ageRange = age;
-        checkStep2();
-    }
-
-    function selectIntent(btn, intent) {
-        document.querySelectorAll('.intent-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        userProfile.intent = intent;
-        checkStep2();
-    }
-
-    function selectApp(btn, app) {
-        document.querySelectorAll('.app-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        userProfile.app = app;
-        checkStep2();
-    }
-
-    function checkStep2() {
-        const ready = userProfile.gender && userProfile.ageRange && userProfile.intent && userProfile.app;
-        document.getElementById('btn-step2').disabled = !ready;
-    }
-
-    function goStep(step) {
-        document.querySelectorAll('.ob-step').forEach(s => s.classList.remove('active'));
-        document.getElementById('step' + step).classList.add('active');
-
-        // Actualizar progress dots
-        for (let i = 1; i <= 3; i++) {
-            const dot = document.getElementById('dot' + i);
-            dot.classList.remove('active', 'done');
-            if (i < step) dot.classList.add('done');
-            else if (i === step) dot.classList.add('active');
-        }
-
-        // Si es paso 3, actualizar bienvenida
-        if (step === 3) {
-            const countryFlags = {
-                'Mexico': '🇲🇽', 'Colombia': '🇨🇴', 'Argentina': '🇦🇷',
-                'España': '🇪🇸', 'Brasil': '🇧🇷', 'Peru': '🇵🇪'
-            };
-            const countryNames = {
-                'Mexico': 'México', 'Colombia': 'Colombia', 'Argentina': 'Argentina',
-                'España': 'España', 'Brasil': 'Brasil', 'Peru': 'Perú'
-            };
-            const genderLabels = { 'male': '👨 Hombre', 'female': '👩 Mujer', 'other': '🌈 Otro' };
-
-            document.getElementById('tag-country').textContent = `${countryFlags[userProfile.country]} ${countryNames[userProfile.country]}`;
-            document.getElementById('tag-gender').textContent = genderLabels[userProfile.gender];
-            document.getElementById('tag-age').textContent = `${userProfile.ageRange} años`;
-        }
-    }
-
-    function startApp() {
-        document.getElementById('onboarding').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
-
-        // Marcar dialecto activo según país del usuario
-        const dialectBtns = document.querySelectorAll('.dialect-chip');
-        dialectBtns.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.getAttribute('onclick').includes(userProfile.country)) {
-                btn.classList.add('active');
-            }
-        });
-    }
-
-    // ==================== APP PRINCIPAL ====================
-    function setDialect(btn, dialect) {
-        document.querySelectorAll('.dialect-chip').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        userProfile.targetDialect = dialect;
-    }
-
-    function actualizarStats() {
-        document.getElementById('stat-usos').textContent = MAX_USOS - usos;
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('msg').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generar(); }
-        });
-    });
-
-    async function generar() {
-        if (usos >= MAX_USOS) {
-            document.getElementById('email-section').style.display = 'block';
-            return;
-        }
-
-        const msg = document.getElementById('msg').value;
-        const style = document.getElementById('style').value;
-        const coachMode = document.getElementById('coachMode').checked;
-
-        if (!msg.trim()) return alert("Pega un mensaje primero");
-
-        document.getElementById('btn').disabled = true;
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('responses').innerHTML = '';
-
-        try {
-            const res = await fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: msg,
-                    style,
-                    naturalness: 8,
-                    language: userProfile.language,
-                    coachMode,
-                    gender: userProfile.gender,
-                    country: userProfile.country,
-                    ageRange: userProfile.ageRange,
-                    targetDialect: userProfile.targetDialect
-                })
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-                const configs = [
-                    { label: "Segura", dot: "#30d158" },
-                    { label: "Atrevida", dot: "#ff453a" },
-                    { label: "Creativa", dot: "#4a9eff" }
-                ];
-                let html = '';
-
-                data.opciones.forEach((op, i) => {
-                    const cfg = configs[i] || { label: `Opción ${i+1}`, dot: "#6b7fa3" };
-                    const texto = op.respuesta || '';
-                    const coach = op.coach || '';
-                    html += `
-                        <div class="response-card">
+        async function generar() {
+            if (usos >= MAX_USOS) { document.getElementById('email-section').classList.remove('hidden'); return; }
+            const msg = document.getElementById('msg').value;
+            const style = document.getElementById('style').value;
+            const coachMode = document.getElementById('coachMode').checked;
+            if (!msg.trim()) return alert("Pega un mensaje primero");
+            document.getElementById('btn').disabled = true;
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('responses').innerHTML = '';
+            try {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg, style, naturalness: 8, language: "Español", coachMode })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    const tipos = ["Segura ✅", "Atrevida 🔥", "Creativa 🧠"];
+                    let html = '';
+                    data.opciones.forEach((op, i) => {
+                        const texto = op.respuesta || '';
+                        const coach = op.coach || '';
+                        html += `<div class="response-card">
                             <div class="response-header">
-                                <div class="response-badge">
-                                    <div class="badge-dot" style="background:${cfg.dot}"></div>
-                                    <span class="response-title" style="color:${cfg.dot}">${cfg.label}</span>
-                                </div>
-                                <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'").replace(/\n/g, ' ')}\`)">Copiar</button>
+                                <span class="badge">${tipos[i] || 'Opcion ' + (i+1)}</span>
+                                <button class="copy-btn" onclick="copiar(this, \`${texto.replace(/`/g, "'")}\`)">Copiar</button>
                             </div>
                             <div class="response-text">${texto}</div>
-                            ${coachMode && coach ? `
-                            <div class="coach-box">
-                                <div class="coach-label">⚡ Por qué funciona</div>
-                                <div class="coach-text">${coach}</div>
-                            </div>` : ''}
+                            ${coachMode && coach ? `<div class="coach-box"><div class="coach-label">Por que funciona</div><div class="coach-text">${coach}</div></div>` : ''}
                         </div>`;
-                });
-
-                document.getElementById('responses').innerHTML = html;
-                usos++;
-                actualizarStats();
-
-                if (usos >= MAX_USOS) {
-                    setTimeout(() => {
-                        document.getElementById('email-section').style.display = 'block';
-                        document.getElementById('btn').style.display = 'none';
-                    }, 1000);
-                }
-            } else {
-                alert("Error: " + data.error);
+                    });
+                    document.getElementById('responses').innerHTML = html;
+                    usos++;
+                    if (usos >= MAX_USOS) {
+                        setTimeout(() => {
+                            document.getElementById('email-section').classList.remove('hidden');
+                            document.getElementById('btn').style.display = 'none';
+                        }, 1000);
+                    }
+                } else { alert("Error: " + data.error); }
+            } catch(e) {
+                alert("Error de conexion. Si es la primera vez, espera 30 segundos y proba de nuevo.");
+            } finally {
+                document.getElementById('btn').disabled = false;
+                document.getElementById('loading').classList.add('hidden');
             }
-        } catch (e) {
-            alert("Error de conexión. Espera 30 segundos y prueba de nuevo.");
-        } finally {
-            document.getElementById('btn').disabled = false;
-            document.getElementById('loading').style.display = 'none';
         }
-    }
 
-    function copiar(btn, texto) {
-        navigator.clipboard.writeText(texto).then(() => {
-            btn.textContent = '✓ Copiado';
-            btn.classList.add('copied');
-            setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
-        });
-    }
+        function copiar(btn, texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                btn.textContent = 'Copiado';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+            });
+        }
 
-    function guardarCorreo() {
-        const email = document.getElementById('email').value;
-        if (!email.includes("@")) return alert("Pon un correo válido");
-        document.getElementById('email-section').innerHTML =
-            "<p style='color:#30d158;font-weight:bold;font-size:14px;'>✓ Registrado. Te avisamos pronto.</p>";
-    }
-</script>
+        function guardarCorreo() {
+            const email = document.getElementById('email').value;
+            if (!email.includes("@")) return alert("Pone un correo valido");
+            document.getElementById('email-section').innerHTML = "<p style='color:#ff2d55; font-family:Rajdhani,sans-serif; font-size:16px; letter-spacing:2px; font-weight:700;'>REGISTRADO. TE AVISAMOS PRONTO.</p>";
+        }
+    </script>
 </body>
 </html>
